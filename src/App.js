@@ -1,107 +1,115 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom'
+//import ReactDOM from 'react-dom'
 import './App.css';
 import Filters from './components/Filters';
 import List from'./components/List';
 import AddEditItem from'./components/AddEditItem';
-import $ from 'jquery';
-
+var debugMode = true;
 
 class App extends Component {
+    constructor() {
+        super();
+        this.dummy = {
+            id: null,
+            title: '',
+            description: '',
+            tags: [],
+            priority: 2
+        };
 
-    deleteToDoItem(id) {
-         let newLIst = this.state.list.filter(item => item.id !== id);
-        this.updateLocalStorage(newLIst);
-        this.setState({list: newLIst});
+        this.state = {
+            filters: {
+                showFinishedTasks: false,
+                taskFilter: '',
+                selectedTags: ''
+            },
+            currentItem: this.dummy,
+            list: JSON.parse(localStorage.getItem('toDoList')) || []
+        };
+    }
+
+    componentDidUpdate() {
+        debugMode&&console.log('i am in componentDidUpdate, state is ', this.state);
     }
 
     updateLocalStorage(list) {
         localStorage.setItem('toDoList', JSON.stringify(list));
     }
 
+    createToDoItem(newItem) {
+        this.state.list.push(newItem);
+        this.updateLocalStorage(this.state.list);
+        this.setState({ list: this.state.list });
+    }
 
-
-    editToDoItem(id) {
+    chooseToDoItem(id) {
         let currentItem = this.state.list.find((item) => item.id === id);
-        //console.log('App get id =', id);
-        console.log('App this.state.list =', this.state.list);
         this.setState({ currentItem: currentItem });
     }
+
+    updateToDoItem(updatedItem) {
+        debugMode&&console.log('i am in updateToDoItem, updatedItem is ', updatedItem);
+
+        let index = this.state.list.findIndex((item) => item.id === updatedItem.id);
+        this.state.list[index] = updatedItem;
+        this.updateLocalStorage(this.state.list);
+        this.setState({
+            list: this.state.list,
+            currentItem: this.dummy
+        });
+    }
+
+    deleteToDoItem(id) {
+        let newLIst = this.state.list.filter(item => item.id !== id);
+        this.updateLocalStorage(newLIst);
+        this.setState({
+            list: newLIst,
+            currentItem: this.dummy
+        });
+    }
+
+
+
+
 
     applyFilters() {
 
     }
 
-    componentWillMount() {
-        this.setState({
-            filters: {
-                showFinishedTasks: false,
-                taskFilter: '',
-                selectedTags: ''
-            },
-            currentItem: {
-                id: null,
-                title: '',
-                description: '',
-                tags: [],
-                priority: 2
-            },
-            list: JSON.parse(localStorage.getItem('toDoList')) || []
-        });
-
-    }
-
-    componentDidMount() {
-        this.subscribeEvents();
-    }
-
-    subscribeEvents() {
-
-    }
-
-    createToDoItem(newItem) {
-        this.state.list.push(newItem);
-        this.updateLocalStorage(this.state.list);
-        this.setState({list: this.state.list});
-    }
-
-    updateTagList() {
-        let tempTagList = [];
-        let tagList = [];
+    makeTagList() {
+        let allTags = [];
+        let uniqueTagList = [];
 
         this.state.list.forEach((item) => {
-            tempTagList = tempTagList.concat(item.tags);
+            allTags = allTags.concat(item.tags);
         });
-        tempTagList.forEach(tag => {
-            if (!tagList.includes(tag)) {
-                tagList.push(tag);
+        allTags.forEach(tag => {
+            if (!uniqueTagList.includes(tag)) {
+                uniqueTagList.push(tag);
             }
         });
 
-        return tagList;
+        return uniqueTagList;
     }
 
     render() {
-
-        //console.log('in App render  currentItem =', this.state.currentItem);
 
         return (
             <div className="app">
                 <Filters
                     config={this.state.filterConfig}
                     onFiltersChange={this.applyFilters.bind(this)}
-                    tags={this.updateTagList()}/>
+                    tags={this.makeTagList()}/>
                 <List
                     list={this.state.list}
                     onDelete={this.deleteToDoItem.bind(this)}
-                    onEdit={this.editToDoItem.bind(this)}/>
+                    onEdit={this.chooseToDoItem.bind(this)}/>
                 <AddEditItem
                     onAddItem={this.createToDoItem.bind(this)}
-                    currentItem={this.state.currentItem}/>
+                    currentItem={this.state.currentItem}
+                    onUpdateItem={this.updateToDoItem.bind(this)}/>
             </div>
         );
-
-
     }
 }
 

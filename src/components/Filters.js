@@ -1,16 +1,25 @@
 import React, {Component} from 'react';
-import $ from 'jquery';
 
 
 class Filters extends Component {
 
-    componentDidMount() {
-        this.subscribeEvents();
+    handleTagFilterClick() {
+
     }
 
-    subscribeEvents() {
-        //$('.xxxxxxx').on('change', this.xxxxxxxx.bind(this));
+    handleDoneFilterClick() {
+
     }
+
+    handleDescriptionFilterClick() {
+
+    }
+
+    handlePriorityFilterClick() {
+
+    }
+
+
 
     render() {
         let tagList = this.props.tags.map(tag => {
@@ -19,36 +28,40 @@ class Filters extends Component {
             );
         });
 
+
+        // todo to split this result to separate components
         return (
             <aside className="left-aside filters-container">
 
                 <div className="field-set finished-tasks">
-                    <input type="checkbox" id="done-checkbox"/>
+                    <input type="checkbox"
+                           id="done-checkbox"
+                           onChange={this.handleDoneFilterClick}/>
                     <label htmlFor="done-checkbox">Show finished tasks</label>
                 </div>
 
                 <div className="field-set tasks-filter">
                     <label htmlFor="tasks-filter">Tasks filter description</label><br/>
-                    <input type="text" id="tasks-filter-description"/>
+                    <input type="text"
+                           id="tasks-filter-description"
+                           onChange={this.handleDescriptionFilterClick}/>
                 </div>
 
-                <div className="field-set tasks-filter">
+                <div className="field-set tasks-filter"
+                    onClick={this.handlePriorityFilterClick}>
                     <label htmlFor="tasks-filter">Tasks filter priority</label><br/>
-                    <input type="radio" name="tasks-filter-priority"/>
-                    <input type="radio" name="tasks-filter-priority"/>
-                    <input type="radio" name="tasks-filter-priority"/>
+                    <input type="checkbox" value="1"/>
+                    <input type="checkbox" value="2"/>
+                    <input type="checkbox" value="3"/>
                 </div>
 
                 <div className="field-set tags-filter">
-                    <span>
-                      Tags filter
-                    </span><br/>
+                    <span>Tags filter</span><br/>
 
-                    <div className="tags-list">
-                        <ul className="tag-item">
-                            {tagList}
-                        </ul>
-                    </div>
+                    <ul className="tags-list"
+                        onClick={this.handleTagFilterClick}>
+                        {tagList}
+                    </ul>
                 </div>
 
             </aside>

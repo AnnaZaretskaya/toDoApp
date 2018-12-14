@@ -1,26 +1,15 @@
 import React, {Component} from 'react';
 import ToDoItem from'./toDoItem';
-import $ from 'jquery';
 
 class List extends Component {
-    componentDidMount() {
-        this.subscribeEvents();
-    }
-    deleteToDoItem(event) {
-        let id = $(event.currentTarget).closest('.task-item').data('id');
+    onDelete(id) {
         this.props.onDelete(id);
     }
 
-    editToDoItem(event) {
-        let id = $(event.currentTarget).closest('.task-item').data('id');
+    onEdit(id) {
         this.props.onEdit(id);
     }
 
-
-    subscribeEvents() {
-        $('.task-item .remove').on('click', (event) => this.deleteToDoItem(event));
-        $('.task-item .edit').on('click', (event) => this.editToDoItem(event));
-    }
 
     render() {
         let toDoList;
@@ -30,8 +19,8 @@ class List extends Component {
                     <ToDoItem
                         key={item.id}
                         item={item}
-                        onDelete={this.props.onDelete}
-                        onEdit={this.props.onEdit}
+                        onDelete={this.onDelete.bind(this)}
+                        onEdit={this.onEdit.bind(this)}
                         />
                 );
             });
