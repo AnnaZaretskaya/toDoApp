@@ -3,17 +3,42 @@ import React, {Component} from 'react';
 import './App.css';
 import Filters from './components/Filters';
 import List from'./components/List';
-import AddEditItem from'./components/AddEditItem';
+import AddItem from'./components/AddItem';
+import EditItem from'./components/EditItem';
+
 var debugMode = true;
 
 class App extends Component {
     constructor() {
+        let toDoList = [{
+            id: 1,
+            title: 'to study React',
+            description: 'Ololo-trololol',
+            tags: 'evaluation, job, suffering',
+            priority: 1,
+            isDone: false
+        }, {
+            id: 2,
+            title: 'to study js',
+            description: 'Ololo-trololol',
+            tags: 'evaluation, job, not big suffering',
+            priority: 2,
+            isDone: false
+        }, {
+            id: 3,
+            title: 'to buy milk',
+            description: 'Ololo-trololol',
+            tags: 'home, food, today',
+            priority: 3,
+            isDone: true
+        }];
+        localStorage.setItem('toDoList', JSON.stringify(toDoList));
         super();
         this.dummy = {
             id: null,
             title: '',
             description: '',
-            tags: [],
+            tags: '',
             priority: 2
         };
 
@@ -23,7 +48,7 @@ class App extends Component {
                 taskFilter: '',
                 selectedTags: ''
             },
-            currentItem: this.dummy,
+            currentItem: Object.assign({}, this.dummy),
             list: JSON.parse(localStorage.getItem('toDoList')) || []
         };
     }
@@ -39,7 +64,9 @@ class App extends Component {
     createToDoItem(newItem) {
         this.state.list.push(newItem);
         this.updateLocalStorage(this.state.list);
-        this.setState({ list: this.state.list });
+        this.setState({
+            list: this.state.list,
+        });
     }
 
     chooseToDoItem(id) {
@@ -55,7 +82,7 @@ class App extends Component {
         this.updateLocalStorage(this.state.list);
         this.setState({
             list: this.state.list,
-            currentItem: this.dummy
+            currentItem: Object.assign({}, this.dummy)
         });
     }
 
@@ -63,25 +90,23 @@ class App extends Component {
         let newLIst = this.state.list.filter(item => item.id !== id);
         this.updateLocalStorage(newLIst);
         this.setState({
-            list: newLIst,
-            currentItem: this.dummy
+            list: newLIst
         });
     }
-
-
-
-
 
     applyFilters() {
 
     }
 
     makeTagList() {
+
         let allTags = [];
         let uniqueTagList = [];
 
         this.state.list.forEach((item) => {
-            allTags = allTags.concat(item.tags);
+            if (item.tags) {
+                allTags = allTags.concat(item.tags.split(', '))
+            }
         });
         allTags.forEach(tag => {
             if (!uniqueTagList.includes(tag)) {
@@ -93,6 +118,18 @@ class App extends Component {
     }
 
     render() {
+        let AddOrEditPanel;
+        if (this.state.currentItem.id) {
+            AddOrEditPanel =
+                <EditItem
+                    currentItem={this.state.currentItem}
+                    onUpdateItem={this.updateToDoItem.bind(this)}/>
+        } else {
+            AddOrEditPanel =
+                <AddItem
+                    onAddItem={this.createToDoItem.bind(this)}
+                    key={this.state.list.length}/> //  или Math.floor(Math.random() * 100)   какой мерзкий хак((((
+        }
 
         return (
             <div className="app">
@@ -104,41 +141,10 @@ class App extends Component {
                     list={this.state.list}
                     onDelete={this.deleteToDoItem.bind(this)}
                     onEdit={this.chooseToDoItem.bind(this)}/>
-                <AddEditItem
-                    onAddItem={this.createToDoItem.bind(this)}
-                    currentItem={this.state.currentItem}
-                    onUpdateItem={this.updateToDoItem.bind(this)}/>
+                {AddOrEditPanel}
             </div>
         );
     }
 }
 
 export default App;
-
-
-/*
-var toDoList = [{
-    id: 1,
-    title: 'to study React',
-    description: 'Ololo-trololol',
-    tags: ['evaluation', 'job', 'suffering'],
-    priority: 1,
-    isDone: false
-}, {
-    id: 2,
-    title: 'to study js',
-    description: 'Ololo-trololol',
-    tags: ['evaluation', 'job', 'not big suffering'],
-    priority: 2,
-    isDone: false
-}, {
-    id: 3,
-    title: 'to buy milk',
-    description: 'Ololo-trololol',
-    tags: ['home', 'food', 'today'],
-    priority: 3,
-    isDone: true
-}];
-localStorage.setItem('toDoList', JSON.stringify(toDoList));
-
-*/

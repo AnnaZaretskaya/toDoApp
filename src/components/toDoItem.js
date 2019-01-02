@@ -5,15 +5,15 @@ class ToDoItem extends Component {
 
     handleTitleClick() {
         // mark as done
-    }
+    };
 
     handleEditButtonClick() {
         this.props.onEdit(this.props.item.id);
-    }
+    };
 
     handleDeleteButtonClick() {
        this.props.onDelete(this.props.item.id);
-    }
+    };
 
     render() {
 
@@ -27,7 +27,7 @@ class ToDoItem extends Component {
                     {this.props.item.title}
                 </h4>
                 <p className="task-description">{this.props.item.description}</p>
-                <p className="task-tags">{this.props.item.tags.join(', ')}</p>
+                <p className="task-tags">{this.props.item.tags}</p>
                 <button className="edit"
                         onClick={this.handleEditButtonClick.bind(this)}>Edit</button>
                 <button className="remove"
@@ -38,4 +38,3 @@ class ToDoItem extends Component {
 }
 
 export default ToDoItem;
-

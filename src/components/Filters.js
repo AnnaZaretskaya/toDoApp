@@ -36,7 +36,7 @@ class Filters extends Component {
                 <div className="field-set finished-tasks">
                     <input type="checkbox"
                            id="done-checkbox"
-                           onChange={this.handleDoneFilterClick}/>
+                           onChange={this.handleDoneFilterClick.bind(this)}/>
                     <label htmlFor="done-checkbox">Show finished tasks</label>
                 </div>
 
@@ -44,11 +44,11 @@ class Filters extends Component {
                     <label htmlFor="tasks-filter">Tasks filter description</label><br/>
                     <input type="text"
                            id="tasks-filter-description"
-                           onChange={this.handleDescriptionFilterClick}/>
+                           onChange={this.handleDescriptionFilterClick.bind(this)}/>
                 </div>
 
                 <div className="field-set tasks-filter"
-                    onClick={this.handlePriorityFilterClick}>
+                    onClick={this.handlePriorityFilterClick.bind(this)}>
                     <label htmlFor="tasks-filter">Tasks filter priority</label><br/>
                     <input type="checkbox" value="1"/>
                     <input type="checkbox" value="2"/>
@@ -59,7 +59,7 @@ class Filters extends Component {
                     <span>Tags filter</span><br/>
 
                     <ul className="tags-list"
-                        onClick={this.handleTagFilterClick}>
+                        onClick={this.handleTagFilterClick.bind(this)}>
                         {tagList}
                     </ul>
                 </div>
