@@ -41,25 +41,33 @@ class AddItem extends Component {
             let newItem = Object.assign({}, this.state.shownItem);
             newItem.id = Math.floor(Math.random() * 10000);
 
+            this.reset();
             this.props.onAddItem(newItem);
-
         } else {
             console.error('Title and Description are required');
         }
     }
 
+
     reset(event) {
-        event.preventDefault();
+        event && event.preventDefault();
+
         this.setState({
             shownItem: Object.assign({}, this.dummy)
         });
     }
-
     isFormValid()  {
         return this.state.shownItem.title &&  this.state.shownItem.description;
     }
 
     render() {
+        let isResetHidden = !(this.state.shownItem.title
+            || this.state.shownItem.description
+            || this.state.shownItem.tags);
+
+
+
+
         return (
             <aside className="create-container">
                 <form className="create-form">
@@ -85,7 +93,8 @@ class AddItem extends Component {
                         create task
                     </button>
 
-                    <button className="reset"
+                    <button hidden={isResetHidden}
+                            className="reset"
                             onClick={this.reset.bind(this)}>
                         reset
                     </button>

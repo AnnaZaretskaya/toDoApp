@@ -12,43 +12,36 @@ var debugMode = false;
 
 class AddItem extends Component {
 
-    constructor(props) {
-        super(props);
+    state = {
+        shownItem: Object.assign({}, this.props.currentItem)
+    };
 
-        this.state = {
-            shownItem: Object.assign({}, this.props.currentItem)
-        };
+    handleInputChange(event) {
+
+        let change = {};
+        change[event.currentTarget.name] = event.currentTarget.value;
 
 
-    }
-
-    handleInputChange(event)  {
-        this.state.shownItem[event.currentTarget.name] = event.currentTarget.value;
-
-        this.setState({shownItem: this.state.shownItem});
-        debugMode&&console.log('i am in handleInputChange, ', event.currentTarget.name, ' was clicked');
-        debugMode&&console.log('i am in handleInputChange, this.state.shownItem is ', this.state.shownItem);
-    }
-
-    handleResetButtonClick(event) {
-        event.preventDefault();
         this.setState({
-            shownItem: this.props.currentItem
+            shownItem: Object.assign(this.state.shownItem, change)
+        });
+    }
+
+    restore(event) {
+        event && event.preventDefault();
+
+        this.setState({
+            shownItem: Object.assign({}, this.props.currentItem)
         });
     }
 
     handleEditButtonClick(event) {
         event.preventDefault();
+
         if (this.isFormValid()) {
-            debugMode&&console.log('i am in updateToDoItem, this.itemChanges is ', this.itemChanges);
-            debugMode&&console.log('i am in updateToDoItem, this.props.currentItem is ', this.props.currentItem);
-
-            //let updatedItem = Object.assign({},  this.props.currentItem, this.itemChanges);
-
-            debugMode&&console.log('i am in updateToDoItem, updatedItem is ', this.state.shownItem);
-            //document.getElementsByClassName('create-edit-form')[0].reset();
 
             this.props.onUpdateItem(this.state.shownItem);
+
         }
     }
 
@@ -73,7 +66,7 @@ class AddItem extends Component {
 
                     <Tags
                         onChange={this.handleInputChange.bind(this)}
-                        value={this.state.shownItem.tags.join(', ')}/>
+                        value={this.state.shownItem.tags}/>
 
                     <Priority
                         onChange={this.handleInputChange.bind(this)}
@@ -81,11 +74,11 @@ class AddItem extends Component {
 
                     <button className="edit"
                             onClick={this.handleEditButtonClick.bind(this)}>
-                        {this.props.mode}
+                        edit
                     </button>
 
                     <button className="restore"
-                            onClick={this.handleResetButtonClick.bind(this)}>
+                            onClick={this.restore.bind(this)}>
                         restore
                     </button>
                 </form>

@@ -8,7 +8,7 @@ class Description extends Component  {
                 <textarea form="create-edit-form"
                           name="description"
                           onChange={this.props.onChange.bind(this)}
-                          defaultValue={this.props.value}/>
+                          value={this.props.value}/>
             </div>
         )
     }

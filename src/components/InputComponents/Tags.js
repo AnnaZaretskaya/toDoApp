@@ -8,7 +8,7 @@ class Tags extends Component  {
                 <input type="text"
                        form="create-edit-form"
                        name="tags"
-                       defaultValue={this.props.value}
+                       value={this.props.value}
                        onChange={this.props.onChange.bind(this)}/>
             </div>
         );

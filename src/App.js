@@ -70,6 +70,8 @@ class App extends Component {
     }
 
     chooseToDoItem(id) {
+
+
         let currentItem = this.state.list.find((item) => item.id === id);
         this.setState({ currentItem: currentItem });
     }
@@ -87,6 +89,8 @@ class App extends Component {
     }
 
     deleteToDoItem(id) {
+
+
         let newLIst = this.state.list.filter(item => item.id !== id);
         this.updateLocalStorage(newLIst);
         this.setState({
@@ -127,8 +131,7 @@ class App extends Component {
         } else {
             AddOrEditPanel =
                 <AddItem
-                    onAddItem={this.createToDoItem.bind(this)}
-                    key={this.state.list.length}/> //  или Math.floor(Math.random() * 100)   какой мерзкий хак((((
+                    onAddItem={this.createToDoItem.bind(this)}/>
         }
 
         return (
