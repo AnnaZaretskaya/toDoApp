@@ -10,29 +10,6 @@ var debugMode = true;
 
 class App extends Component {
     constructor() {
-        let toDoList = [{
-            id: 1,
-            title: 'to study React',
-            description: 'Ololo-trololol',
-            tags: 'evaluation, job, suffering',
-            priority: 1,
-            isDone: false
-        }, {
-            id: 2,
-            title: 'to study js',
-            description: 'Ololo-trololol',
-            tags: 'evaluation, job, not big suffering',
-            priority: 2,
-            isDone: false
-        }, {
-            id: 3,
-            title: 'to buy milk',
-            description: 'Ololo-trololol',
-            tags: 'home, food, today',
-            priority: 3,
-            isDone: true
-        }];
-        localStorage.setItem('toDoList', JSON.stringify(toDoList));
         super();
         this.dummy = {
             id: null,
@@ -69,19 +46,18 @@ class App extends Component {
         });
     }
 
-    chooseToDoItem(id) {
-
-
-        let currentItem = this.state.list.find((item) => item.id === id);
-        this.setState({ currentItem: currentItem });
+    chooseToDoItem(item) {
+        this.setState({ currentItem: item });
     }
 
     updateToDoItem(updatedItem) {
         debugMode&&console.log('i am in updateToDoItem, updatedItem is ', updatedItem);
 
         let index = this.state.list.findIndex((item) => item.id === updatedItem.id);
+
         this.state.list[index] = updatedItem;
         this.updateLocalStorage(this.state.list);
+
         this.setState({
             list: this.state.list,
             currentItem: Object.assign({}, this.dummy)
@@ -89,17 +65,27 @@ class App extends Component {
     }
 
     deleteToDoItem(id) {
-
-
         let newLIst = this.state.list.filter(item => item.id !== id);
+
         this.updateLocalStorage(newLIst);
         this.setState({
-            list: newLIst
+            list: newLIst,
+            currentItem: Object.assign({}, this.dummy)
         });
     }
 
     applyFilters() {
 
+    }
+
+    onDoneToggle(id) {
+        let index = this.state.list.findIndex((item) => item.id === id);
+
+        this.state.list[index].isDone = !this.state.list[index].isDone;
+        this.updateLocalStorage(this.state.list);
+        this.setState({
+            list: this.state.list
+        });
     }
 
     makeTagList() {
@@ -143,7 +129,8 @@ class App extends Component {
                 <List
                     list={this.state.list}
                     onDelete={this.deleteToDoItem.bind(this)}
-                    onEdit={this.chooseToDoItem.bind(this)}/>
+                    onEdit={this.chooseToDoItem.bind(this)}
+                    onDoneToggle={this.onDoneToggle.bind(this)}/>
                 {AddOrEditPanel}
             </div>
         );
@@ -151,3 +138,29 @@ class App extends Component {
 }
 
 export default App;
+
+/*
+let toDoList = [{
+            id: 1,
+            title: 'to study React',
+            description: 'Ololo-trololol',
+            tags: 'evaluation, job, suffering',
+            priority: 1,
+            isDone: false
+        }, {
+            id: 2,
+            title: 'to study js',
+            description: 'Ololo-trololol',
+            tags: 'evaluation, job, not big suffering',
+            priority: 2,
+            isDone: false
+        }, {
+            id: 3,
+            title: 'to buy milk',
+            description: 'Ololo-trololol',
+            tags: 'home, food, today',
+            priority: 3,
+            isDone: true
+        }];
+        localStorage.setItem('toDoList', JSON.stringify(toDoList));
+* */

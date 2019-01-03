@@ -7,6 +7,7 @@ import Title from'./InputComponents/Title';
 import Description from'./InputComponents/Description';
 import Tags from'./InputComponents/Tags';
 import Priority from'./InputComponents/Priority';
+import { Utils } from './utils'
 
 var debugMode = false;
 
@@ -50,6 +51,7 @@ class AddItem extends Component {
     }
 
     render() {
+        let isRestoreHidden = Utils.isEqual(this.state.shownItem, this.props.currentItem);
 
         return (
             <aside className="edit-container">
@@ -77,7 +79,8 @@ class AddItem extends Component {
                         edit
                     </button>
 
-                    <button className="restore"
+                    <button hidden={isRestoreHidden}
+                            className="restore"
                             onClick={this.restore.bind(this)}>
                         restore
                     </button>

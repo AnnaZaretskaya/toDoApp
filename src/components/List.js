@@ -6,10 +6,13 @@ class List extends Component {
         this.props.onDelete(id);
     }
 
-    onEdit(id) {
-        this.props.onEdit(id);
+    onEdit(item) {
+        this.props.onEdit(item);
     }
 
+    onDoneToggle(id) {
+        this.props.onDoneToggle(id);
+    }
 
     render() {
         let toDoList;
@@ -21,6 +24,7 @@ class List extends Component {
                         item={item}
                         onDelete={this.onDelete.bind(this)}
                         onEdit={this.onEdit.bind(this)}
+                        onDoneToggle={this.onDoneToggle.bind(this)}
                         />
                 );
             });

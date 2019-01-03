@@ -4,11 +4,11 @@ import React, {Component} from 'react';
 class ToDoItem extends Component {
 
     handleTitleClick() {
-        // mark as done
+        this.props.onDoneToggle(this.props.item.id);
     };
 
     handleEditButtonClick() {
-        this.props.onEdit(this.props.item.id);
+        this.props.onEdit(this.props.item);
     };
 
     handleDeleteButtonClick() {

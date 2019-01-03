@@ -10,19 +10,19 @@ class Priority extends Component  {
                        name="priority"
                        value="1"
                        onChange={this.props.onChange.bind(this)}
-                       defaultChecked={Number(this.props.value) === 1}/>
+                       checked={Number(this.props.value) === 1}/>
                 <input type="radio"
                        form="create-edit-form"
                        name="priority"
                        value="2"
                        onChange={this.props.onChange.bind(this)}
-                       defaultChecked={Number(this.props.value) === 2}/>
+                       checked={Number(this.props.value) === 2}/>
                 <input type="radio"
                        form="create-edit-form"
                        name="priority"
                        value="3"
                        onChange={this.props.onChange.bind(this)}
-                       defaultChecked={Number(this.props.value) === 3}/>
+                       checked={Number(this.props.value) === 3}/>
             </div>
         );
     }
