@@ -3,18 +3,25 @@
 // https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html
 //example https://codesandbox.io/s/7154w1l551
 import React, {Component} from 'react';
-import Title from'./InputComponents/Title';
-import Description from'./InputComponents/Description';
-import Tags from'./InputComponents/Tags';
-import Priority from'./InputComponents/Priority';
-import { Utils } from './utils'
+import Title from './Title';
+import Description from './Description';
+import Tags from './Tags';
+import Priority from './Priority';
 
-var debugMode = false;
+var debugMode = true;
+//debugMode&&console.log('i am in ,  is ', );
 
 class AddItem extends Component {
 
+    addEditBlank = {
+        title: '',
+        description: '',
+        tags: '',
+        priority: 2
+    };
+
     state = {
-        shownItem: Object.assign({}, this.props.currentItem)
+        shownItem: Object.assign({}, this.addEditBlank)
     };
 
     handleInputChange(event) {
@@ -28,35 +35,42 @@ class AddItem extends Component {
         });
     }
 
-    restore(event) {
-        event && event.preventDefault();
-
-        this.setState({
-            shownItem: Object.assign({}, this.props.currentItem)
-        });
-    }
-
-    handleEditButtonClick(event) {
+    handleCreateButtonClick(event)  {
         event.preventDefault();
-
         if (this.isFormValid()) {
+            let newItem = Object.assign({}, this.state.shownItem);
+            newItem.id = Math.floor(Math.random() * 10000);
 
-            this.props.onUpdateItem(this.state.shownItem);
-
+            this.reset();
+            this.props.onAddItem(newItem);
+        } else {
+            console.error('Title and Description are required');
         }
     }
 
+
+    reset(event) {
+        event && event.preventDefault();
+
+        this.setState({
+            shownItem: Object.assign({}, this.addEditBlank)
+        });
+    }
     isFormValid()  {
-        return this.state.shownItem.title &&  this.state.shownItem.description
+        return this.state.shownItem.title &&  this.state.shownItem.description;
     }
 
     render() {
-        let isRestoreHidden = Utils.isEqual(this.state.shownItem, this.props.currentItem);
+        let isResetHidden = !(this.state.shownItem.title
+            || this.state.shownItem.description
+            || this.state.shownItem.tags);
+
+
+
 
         return (
-            <aside className="edit-container">
-                <form className="edit-form"
-                      data-id={this.state.shownItem.id}>
+            <aside className="create-container">
+                <form className="create-form">
 
                     <Title
                         onChange={this.handleInputChange.bind(this)}
@@ -74,15 +88,15 @@ class AddItem extends Component {
                         onChange={this.handleInputChange.bind(this)}
                         value={this.state.shownItem.priority}/>
 
-                    <button className="edit"
-                            onClick={this.handleEditButtonClick.bind(this)}>
-                        edit
+                    <button className="create"
+                            onClick={this.handleCreateButtonClick.bind(this)}>
+                        create task
                     </button>
 
-                    <button hidden={isRestoreHidden}
-                            className="restore"
-                            onClick={this.restore.bind(this)}>
-                        restore
+                    <button hidden={isResetHidden}
+                            className="reset"
+                            onClick={this.reset.bind(this)}>
+                        reset
                     </button>
                 </form>
             </aside>

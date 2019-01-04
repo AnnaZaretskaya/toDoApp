@@ -21,7 +21,26 @@ body {
     flex-direction: row;
     justify-content: center;
 }
+/************Filter Panel**************/
 
+.filters-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.filters-container .field-set {
+    margin-bottom: 20px;
+}
+
+.filters-container ul {
+    list-style: none;
+}
+
+.tags-filter li[data-selected=true] {
+    background-color: #61dafb;
+}
+/************List Panel****************/
 .list-container {
     display: flex;
     flex-direction: column;
@@ -43,19 +62,20 @@ body {
 }
 
 .task-item[data-priority='1']  {
-    background-color: #e2fbff;
+    border-left-color: darkblue;
 }
 
 .task-item[data-priority='2'] {
-    background-color: #f9ffe2;
+    border-left-color: darkgreen;
 }
 
 .task-item[data-priority='3']  {
-    background-color: #ffe2e2;
+    border-left-color:darkred;
 }
+/************AddEdit Panel*************/
 
-
-.create-edit-contaiter form {
+.create-container form,
+.edit-container form{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
