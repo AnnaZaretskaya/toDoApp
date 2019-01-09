@@ -1,0 +1,25 @@
+/************Filter Panel**************/
+
+.filters-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.filters-container .field-set {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.filters-container ul {
+    list-style: none;
+}
+
+.filters-container li {
+    cursor: pointer;
+}
+
+.tags-filter li[data-selected=true] {
+    background-color: #61dafb;
+}

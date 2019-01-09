@@ -18,10 +18,10 @@ class AddItem extends Component {
     };
 
     handleInputChange(event) {
-
         let change = {};
-        change[event.currentTarget.name] = event.currentTarget.value;
+        let { name, value } = event.currentTarget;
 
+        change[name] = value;
 
         this.setState({
             shownItem: Object.assign(this.state.shownItem, change)
@@ -54,7 +54,7 @@ class AddItem extends Component {
         let isRestoreHidden = Utils.isEqual(this.state.shownItem, this.props.currentItem);
 
         return (
-            <aside className="edit-container">
+            <aside className="add-edit-panel">
                 <form className="edit-form"
                       data-id={this.state.shownItem.id}>
 

@@ -1,0 +1,49 @@
+/************List Panel****************/
+.list-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-width: 300px;
+}
+
+.list-container .complete-all-toggle{
+    margin: 0 1em 1em 1em;
+}
+
+.task-item {
+    border: 2px solid #999;
+    margin: 0 1em 2em 1em;
+    padding: 10px;
+}
+
+.task-item .task-title{
+    text-align: left;
+    cursor: pointer;
+}
+
+.task-item[data-isdone=true] .task-title {
+    text-decoration: line-through;
+}
+
+.task-item[data-priority='1']  {
+    border-left: 4px solid darkblue;
+}
+
+.task-item[data-priority='2'] {
+    border-left: 4px solid darkgreen;
+}
+
+.task-item[data-priority='3']  {
+    border-left: 4px solid darkred;
+}
+
+.edit {
+    min-width: 5em;
+    margin-right: 1em;
+    cursor: pointer;
+}
+
+.remove {
+    min-width: 5em;
+    cursor: pointer;
+}

@@ -34,7 +34,7 @@ class Tags extends Component  {
 
         return (
             <div className="field-set tags-filter">
-                <span>Show tasks with tags</span><br/>
+                <span>Show tasks with tags</span>
                 <ul className="tags-list"
                     data-name="tags"
                     onClick={this.handleTagsChange.bind(this)}>

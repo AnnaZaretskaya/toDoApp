@@ -3,6 +3,7 @@ import ShowUnDoneItems from './ShowUnDoneItems';
 import Content from './Content';
 import Priorities from "./Priorities";
 import Tags from "./Tags";
+import '../styles/filter.panel.css';
 
 class Filters extends Component {
 

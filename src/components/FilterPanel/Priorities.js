@@ -7,7 +7,7 @@ class Priorities extends Component  {
 
         if (change.includes(event.target.value)) {
 
-            change.splice(change.indexOf(event.target.value),1);
+            change.splice(change.indexOf(event.target.value), 1);
         } else {
 
             change = change.concat([event.target.value]);
@@ -21,13 +21,14 @@ class Priorities extends Component  {
             <div className="field-set priorities-filter"
                  data-name="priorities"
                  onClick={this.handlePrioritiesChange.bind(this)}>
-                <label>Tasks filter priority</label><br/>
+                <label>Tasks filter priority<br/>
                     <input type="checkbox" value="1"
                            checked={this.props.priorities.includes('1')}/>
                     <input type="checkbox" value="2"
                            checked={this.props.priorities.includes('2')}/>
                     <input type="checkbox" value="3"
                            checked={this.props.priorities.includes('3')}/>
+                </label>
             </div>
         )
     }

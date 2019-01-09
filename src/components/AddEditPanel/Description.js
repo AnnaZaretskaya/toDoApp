@@ -4,11 +4,12 @@ class Description extends Component  {
     render() {
         return (
             <div className="field-set">
-                <label htmlFor="task-description">description</label><br/>
-                <textarea form="create-edit-form"
+                <label htmlFor="task-description">description<br/>
+                    <textarea form="create-edit-form"
                           name="description"
                           onChange={this.props.onChange.bind(this)}
                           value={this.props.value}/>
+                </label>
             </div>
         )
     }

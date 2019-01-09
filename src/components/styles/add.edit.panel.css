@@ -1,0 +1,23 @@
+/************Add Edit Panel*************/
+.add-edit-panel form{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.add-edit-panel .field-set {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2em;
+}
+
+.add-edit-panel input {
+    margin-right: 0.3em;
+}
+
+.add-edit-panel .edit,
+.add-edit-panel .restore {
+    min-width: 5em;
+    max-width: 10em;
+    margin-bottom: 0.5em;
+}

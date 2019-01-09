@@ -40,7 +40,6 @@ class App extends Component {
     createToDoItem(newItem) {
         this.state.list.push(newItem);
         this.updateLocalStorage(this.state.list);
-        // check for filters
         this.setState({
             list: this.state.list,
         });
@@ -54,6 +53,8 @@ class App extends Component {
         debugMode&&console.log('i am in updateToDoItem, updatedItem is ', updatedItem);
 
         let index = this.state.list.findIndex((item) => item.id === updatedItem.id);
+        updatedItem.isDone = this.state.list[index].isDone;
+
 
         this.state.list[index] = updatedItem;
         this.updateLocalStorage(this.state.list);
@@ -87,6 +88,17 @@ class App extends Component {
 
         this.state.list[index].isDone = !this.state.list[index].isDone;
         this.updateLocalStorage(this.state.list);
+        this.setState({
+            list: this.state.list
+        });
+    }
+
+    completeAllToggle(doneState) {
+
+        this.state.list.map((item) => {
+            return item.isDone = doneState;
+        });
+
         this.setState({
             list: this.state.list
         });
@@ -135,7 +147,8 @@ class App extends Component {
                     filters={this.state.filters}
                     onDelete={this.deleteToDoItem.bind(this)}
                     onEdit={this.chooseToDoItem.bind(this)}
-                    onDoneToggle={this.onDoneToggle.bind(this)}/>
+                    onDoneToggle={this.onDoneToggle.bind(this)}
+                    completeAllToggle={this.completeAllToggle.bind(this)}/>
                 {AddOrEditPanel}
             </div>
         );

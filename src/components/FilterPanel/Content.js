@@ -13,7 +13,8 @@ class Content extends Component  {
                     <input type="text"
                            name="content"
                            onChange={this.handleContentChange.bind(this)}
-                           value={this.props.content}/></label>
+                           value={this.props.content}/>
+                </label>
             </div>
         )
     }

@@ -1,28 +1,34 @@
 import React, {Component} from 'react';
 
 class Priority extends Component  {
-    render( ) {
+    render() {
         return (
             <div className="field-set">
-                <label htmlFor="priority">priority</label><br/>
-                <input type="radio"
-                       form="create-edit-form"
+                <p >priority</p>
+                <label>
+                    <input type="radio"
                        name="priority"
                        value="1"
                        onChange={this.props.onChange.bind(this)}
                        checked={Number(this.props.value) === 1}/>
-                <input type="radio"
-                       form="create-edit-form"
+                    Low
+                </label>
+                <label>
+                    <input type="radio"
                        name="priority"
                        value="2"
                        onChange={this.props.onChange.bind(this)}
                        checked={Number(this.props.value) === 2}/>
-                <input type="radio"
-                       form="create-edit-form"
+                    Medium
+                </label>
+                <label>
+                    <input type="radio"
                        name="priority"
                        value="3"
                        onChange={this.props.onChange.bind(this)}
                        checked={Number(this.props.value) === 3}/>
+                    Hight
+                </label>
             </div>
         );
     }
