@@ -29,7 +29,6 @@ class AddItem extends Component {
         let change = {};
         change[event.currentTarget.name] = event.currentTarget.value;
 
-
         this.setState({
             shownItem: Object.assign(this.state.shownItem, change)
         });
@@ -37,9 +36,20 @@ class AddItem extends Component {
 
     handleCreateButtonClick(event)  {
         event.preventDefault();
+
+
+
         if (this.isFormValid()) {
             let newItem = Object.assign({}, this.state.shownItem);
             newItem.id = Math.floor(Math.random() * 10000);
+            newItem.isDone = false;
+
+            newItem.tags = newItem.tags //  прости, читатель((((
+                .split(',')
+                .map(tag => tag.trim())
+                .filter((tag) => {return tag !==''})
+                .join(', ');
+
 
             this.reset();
             this.props.onAddItem(newItem);
@@ -47,7 +57,6 @@ class AddItem extends Component {
             console.error('Title and Description are required');
         }
     }
-
 
     reset(event) {
         event && event.preventDefault();
@@ -69,7 +78,7 @@ class AddItem extends Component {
 
 
         return (
-            <aside className="create-container">
+            <aside className="add-edit-panel">
                 <form className="create-form">
 
                     <Title
@@ -90,7 +99,7 @@ class AddItem extends Component {
 
                     <button className="create"
                             onClick={this.handleCreateButtonClick.bind(this)}>
-                        create task
+                        create new task
                     </button>
 
                     <button hidden={isResetHidden}
