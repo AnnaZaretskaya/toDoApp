@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class Priorities extends Component  {
+class Priorities extends Component {
 
     handlePrioritiesChange(event) {
         let change = [].concat(this.props.priorities);

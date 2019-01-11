@@ -1,5 +1,5 @@
 /************Add Edit Panel*************/
-.add-edit-panel form{
+.add-edit-panel form {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

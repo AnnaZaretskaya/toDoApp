@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class CompleteAllToggle extends Component  {
+class CompleteAllToggle extends Component {
 
     render() {
         return (
@@ -9,7 +9,7 @@ class CompleteAllToggle extends Component  {
                     <input type="checkbox"
                            onChange={this.props.onChange.bind(this)}
                            checked={this.props.isChecked}/>
-                    Mark all as complete
+                    Mark all as completed
                 </label>
             </div>
         )

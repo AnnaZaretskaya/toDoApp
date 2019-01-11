@@ -7,19 +7,16 @@ import Title from './Title';
 import Description from './Description';
 import Tags from './Tags';
 import Priority from './Priority';
-import { Utils } from '../utils'
-
-var debugMode = false;
+import {Utils} from '../utils'
 
 class AddItem extends Component {
-
     state = {
         shownItem: Object.assign({}, this.props.currentItem)
     };
 
     handleInputChange(event) {
         let change = {};
-        let { name, value } = event.currentTarget;
+        let {name, value} = event.currentTarget;
 
         change[name] = value;
 
@@ -42,12 +39,11 @@ class AddItem extends Component {
         if (this.isFormValid()) {
 
             this.props.onUpdateItem(this.state.shownItem);
-
         }
     }
 
-    isFormValid()  {
-        return this.state.shownItem.title &&  this.state.shownItem.description
+    isFormValid() {
+        return this.state.shownItem.title && this.state.shownItem.description
     }
 
     render() {

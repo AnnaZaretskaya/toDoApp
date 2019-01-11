@@ -4,19 +4,20 @@
     flex-direction: column;
     justify-content: flex-start;
     min-width: 300px;
+    padding: 0 1em;
 }
 
-.list-container .complete-all-toggle{
-    margin: 0 1em 1em 1em;
+.list-container .complete-all-toggle {
+    margin-bottom: 1em;
 }
 
 .task-item {
     border: 2px solid #999;
-    margin: 0 1em 2em 1em;
+    margin-bottom: 1em;
     padding: 10px;
 }
 
-.task-item .task-title{
+.task-item .task-title {
     text-align: left;
     cursor: pointer;
 }
@@ -25,15 +26,15 @@
     text-decoration: line-through;
 }
 
-.task-item[data-priority='1']  {
+.task-item[data-priority='1'] {
     border-left: 4px solid darkblue;
 }
 
 .task-item[data-priority='2'] {
-    border-left: 4px solid darkgreen;
+    border-left: 4px solid darkkhaki;
 }
 
-.task-item[data-priority='3']  {
+.task-item[data-priority='3'] {
     border-left: 4px solid darkred;
 }
 
@@ -46,4 +47,12 @@
 .remove {
     min-width: 5em;
     cursor: pointer;
+}
+
+.delete-completed {
+    margin-bottom: 1em;
+}
+
+.left-items {
+    margin-bottom: 1em;
 }

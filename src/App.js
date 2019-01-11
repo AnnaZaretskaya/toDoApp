@@ -1,12 +1,9 @@
 import React, {Component} from 'react';
-//import ReactDOM from 'react-dom'
 import './App.css';
 import Filters from './components/FilterPanel/Filters';
 import List from './components/ListPanel/List';
 import AddItem from './components/AddEditPanel/AddItem';
 import EditItem from './components/AddEditPanel/EditItem';
-
-var debugMode = true;
 
 class App extends Component {
     constructor() {
@@ -23,13 +20,14 @@ class App extends Component {
             showUnDone: false,
             content: '',
             priorities: [],// я решила, что здесь нужно работать с массивами, потому что это соответствует моему чувству прекрасного
-            selectedTags: [] // аналогично
+            selectedTags: []
         };
 
         this.state = {
             filters: Object.assign({}, this.filterBlank),
             currentItem: Object.assign({}, this.addEditBlank),
-            list: JSON.parse(localStorage.getItem('toDoList')) || []
+            list: JSON.parse(localStorage.getItem('toDoList')) || [],
+            areAllItemsCompleted: false
         };
     }
 
@@ -46,19 +44,15 @@ class App extends Component {
     }
 
     chooseToDoItem(item) {
-        this.setState({ currentItem: item });
+        this.setState({currentItem: item});
     }
 
     updateToDoItem(updatedItem) {
-        debugMode&&console.log('i am in updateToDoItem, updatedItem is ', updatedItem);
-
         let index = this.state.list.findIndex((item) => item.id === updatedItem.id);
         updatedItem.isDone = this.state.list[index].isDone;
 
-
         this.state.list[index] = updatedItem;
         this.updateLocalStorage(this.state.list);
-
         this.setState({
             list: this.state.list,
             currentItem: Object.assign({}, this.addEditBlank)
@@ -76,8 +70,6 @@ class App extends Component {
     }
 
     handleFilterChange(changes) {
-        changes  = changes || {};
-
         this.setState({
             filters: Object.assign(this.state.filters, changes)
         });
@@ -89,23 +81,45 @@ class App extends Component {
         this.state.list[index].isDone = !this.state.list[index].isDone;
         this.updateLocalStorage(this.state.list);
         this.setState({
-            list: this.state.list
+            list: this.state.list,
+            areAllItemsCompleted: this.areAllItemsCompleted()
         });
     }
 
-    completeAllToggle(doneState) {
+    areAllItemsCompleted() {
+        if (!this.state.list.length) {
+            return false
+        }
 
-        this.state.list.map((item) => {
-            return item.isDone = doneState;
+        return !this.state.list.some((item) => {
+            return item.isDone === false
         });
+    }
 
+    onDoneAllToggle() {
+        let doneState = this.areAllItemsCompleted();
+
+        this.state.list.forEach((item) => {
+            return item.isDone = !doneState;
+        });
+        this.updateLocalStorage(this.state.list);
         this.setState({
-            list: this.state.list
+            list: this.state.list,
+            areAllItemsCompleted: this.areAllItemsCompleted()
         });
+    }
+
+    deleteAllCompleted() {
+        let list = this.state.list.filter((item) => {
+            return item.isDone === false
+        });
+        this.setState({
+            list: list
+        });
+        this.updateLocalStorage(list);
     }
 
     makeTagList() {
-
         let allTags = [];
         let uniqueTagList = [];
 
@@ -119,12 +133,12 @@ class App extends Component {
                 uniqueTagList.push(tag);
             }
         });
-
         return uniqueTagList;
     }
 
     render() {
         let AddOrEditPanel;
+
         if (this.state.currentItem.id) {
             AddOrEditPanel =
                 <EditItem
@@ -135,7 +149,6 @@ class App extends Component {
                 <AddItem
                     onAddItem={this.createToDoItem.bind(this)}/>
         }
-
         return (
             <div className="app">
                 <Filters
@@ -148,7 +161,9 @@ class App extends Component {
                     onDelete={this.deleteToDoItem.bind(this)}
                     onEdit={this.chooseToDoItem.bind(this)}
                     onDoneToggle={this.onDoneToggle.bind(this)}
-                    completeAllToggle={this.completeAllToggle.bind(this)}/>
+                    onDoneAllToggle={this.onDoneAllToggle.bind(this)}
+                    areAllItemsCompleted={this.state.areAllItemsCompleted}
+                    onDeleteAllCompleted={this.deleteAllCompleted.bind(this)}/>
                 {AddOrEditPanel}
             </div>
         );

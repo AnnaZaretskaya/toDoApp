@@ -1,13 +1,18 @@
+// there were 3 options to update component without unsafe_componentWillReceiveProps
+// 1. use static getDerivedStateFromProps with all filters handlers inside (leads to tremendous method size)
+// 2. merge render and logic (not works for my case)
+// 3. use memoize.
+// https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#what-about-memoization
+
 import React, {Component} from 'react';
 import ToDoItem from './toDoItem';
 import CompleteAllToggle from './CompleteAllToggle';
+import DeleteCompleted from './DeleteCompleted';
+import Left from './Left';
+import {Utils} from '../utils'
 import '../styles/list.panel.css';
 
 class List extends Component {
-    state = {
-        iscompleteAllChecked: false
-    };
-
     onDelete(id) {
         this.props.onDelete(id);
     }
@@ -20,64 +25,75 @@ class List extends Component {
         this.props.onDoneToggle(id);
     }
 
-    // todo apply just changed filters
     applyFilters() {
-        this.list =  [].concat(this.props.list);
 
-        this.applyShowUnDone();
-        this.applyContentFilter();
-        this.applyPrioritiesFilter();
-        this.applyTagsFilter();
+        if (Utils.isEqual(this.props.filters, {
+            showUnDone: false,
+            content: '',
+            priorities: [],
+            selectedTags: []
+        })) {
+            return this.props.list;
+        }
 
+        let filteredList = [].concat(this.props.list);
+
+        filteredList = this.applyShowUnDone(filteredList);
+        filteredList = this.applyContentFilter(filteredList);
+        filteredList = this.applyPrioritiesFilter(filteredList);
+        filteredList = this.applyTagsFilter(filteredList);
+
+        return filteredList;
     }
 
-    applyShowUnDone() {
+    applyShowUnDone(list) {
         if (this.props.filters.showUnDone) {
-            this.list = this.list.filter((item) => {
+            list = list.filter((item) => {
                 return item.isDone === false;
             });
         }
+        return list;
     }
 
-    applyContentFilter() {
-        this.list = this.list.filter((item) => {
+    applyContentFilter(list) {
+        list = list.filter((item) => {
             return (item.title.includes(this.props.filters.content) || item.description.includes(this.props.filters.content))
         });
+        return list;
     }
 
-    applyPrioritiesFilter() {
+    applyPrioritiesFilter(list) {
         if (this.props.filters.priorities.length) {
-            this.list = this.list.filter((item) => {
+            list = list.filter((item) => {
                 return this.props.filters.priorities.includes(item.priority)
             });
         }
+        return list;
     }
 
-    applyTagsFilter() {
+    applyTagsFilter(list) {
         if (this.props.filters.selectedTags.length) {
-            this.list = this.list.filter((item) => {
+            list = list.filter((item) => {
                 return this.props.filters.selectedTags.some((selectedTag) => {
                     return item.tags.split(', ').includes(selectedTag);
                 });
             });
         }
+        return list;
     }
 
-    completeAllToggle() {
-        this.setState({
-            iscompleteAllChecked: !this.state.iscompleteAllChecked
-        });
-
-        this.props.completeAllToggle(!this.state.iscompleteAllChecked);
+    getNumberCompleted() {
+        return this.props.list.filter((item) => {
+            return item.isDone === true
+        }).length
     }
 
     render() {
         let toDoList;
+        let list = this.applyFilters();
 
-        this.applyFilters();
-
-        if(this.list.length) {
-            toDoList = this.list.map(item => {
+        if (list.length) {
+            toDoList = list.map(item => {
                 return (
                     <ToDoItem
                         key={item.id}
@@ -88,15 +104,15 @@ class List extends Component {
                 );
             });
         }
-
-        // todo add total numbers of unDone items
-        // todo add delete all done items with it numbers
         return (
             <main className="list-container">
                 <CompleteAllToggle
-                    onChange={this.completeAllToggle.bind(this)}
-                    isChecked={this.state.iscompleteAllChecked}/>
-
+                    onChange={this.props.onDoneAllToggle.bind(this)}
+                    isChecked={this.props.areAllItemsCompleted}/>
+                <DeleteCompleted
+                    onDeleteAllCompleted={this.props.onDeleteAllCompleted.bind(this)}
+                    number={this.getNumberCompleted()}/>
+                <Left number={this.props.list.length - this.getNumberCompleted()}/>
                 {toDoList}
             </main>
         );

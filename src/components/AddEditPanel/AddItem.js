@@ -9,6 +9,7 @@ import Tags from './Tags';
 import Priority from './Priority';
 
 var debugMode = true;
+
 //debugMode&&console.log('i am in ,  is ', );
 
 class AddItem extends Component {
@@ -34,10 +35,8 @@ class AddItem extends Component {
         });
     }
 
-    handleCreateButtonClick(event)  {
+    handleCreateButtonClick(event) {
         event.preventDefault();
-
-
 
         if (this.isFormValid()) {
             let newItem = Object.assign({}, this.state.shownItem);
@@ -47,9 +46,10 @@ class AddItem extends Component {
             newItem.tags = newItem.tags //  прости, читатель((((
                 .split(',')
                 .map(tag => tag.trim())
-                .filter((tag) => {return tag !==''})
+                .filter((tag) => {
+                    return tag !== ''
+                })
                 .join(', ');
-
 
             this.reset();
             this.props.onAddItem(newItem);
@@ -65,17 +65,15 @@ class AddItem extends Component {
             shownItem: Object.assign({}, this.addEditBlank)
         });
     }
-    isFormValid()  {
-        return this.state.shownItem.title &&  this.state.shownItem.description;
+
+    isFormValid() {
+        return this.state.shownItem.title && this.state.shownItem.description;
     }
 
     render() {
         let isResetHidden = !(this.state.shownItem.title
             || this.state.shownItem.description
             || this.state.shownItem.tags);
-
-
-
 
         return (
             <aside className="add-edit-panel">

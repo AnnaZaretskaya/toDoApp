@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class Content extends Component  {
+class Content extends Component {
 
     handleContentChange(event) {
         this.props.onChange({content: event.currentTarget.value});
