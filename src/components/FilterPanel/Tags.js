@@ -2,15 +2,14 @@ import React, {Component} from 'react';
 
 class Tags extends Component {
 
-    handleTagsChange(event) {
+    handleTagsFilter(event) {
         let change = [].concat(this.props.selectedTags);
 
-        if (change.includes(event.target.innerText)) {
-            change.splice(change.indexOf(event.target.innerText), 1);
-        } else {
-            change = change.concat([event.target.innerText]);
-        }
-        this.props.onChange({selectedTags: change});
+        change.includes(event.target.innerText)
+            ? change.splice(change.indexOf(event.target.innerText), 1)
+            : change = change.concat([event.target.innerText]);
+
+        this.props.action({ selectedTags: change });
     }
 
     render() {
@@ -27,7 +26,7 @@ class Tags extends Component {
                 <span>Show tasks with tags</span>
                 <ul className="tags-list"
                     data-name="tags"
-                    onClick={this.handleTagsChange.bind(this)}>
+                    onClick={this.handleTagsFilter.bind(this)}>
                     {tagList}
                 </ul>
             </div>

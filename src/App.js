@@ -1,129 +1,27 @@
 import React, {Component} from 'react';
 import './App.css';
 import Filters from './components/FilterPanel/Filters';
+import { connect } from 'react-redux';
 import List from './components/ListPanel/List';
-import AddItem from './components/AddEditPanel/AddItem';
-import EditItem from './components/AddEditPanel/EditItem';
+import AddOrEditForm from './components/AddEditPanel/AddOrEditForm';
+import { actionCreators } from './storeUtils/actions';
 
 class App extends Component {
-    constructor() {
-        super();
-        this.addEditBlank = {
+    state = {
+        shownItem: {
             id: null,
             title: '',
             description: '',
-            tags: '', // я решила что здесь удобно работать со строкой, потому что никакой логики не завязано на тэгах
-            priority: 2
-        };
-
-        this.filterBlank = {
-            showUnDone: false,
-            content: '',
-            priorities: [],// я решила, что здесь нужно работать с массивами, потому что это соответствует моему чувству прекрасного
-            selectedTags: []
-        };
-
-        this.state = {
-            filters: Object.assign({}, this.filterBlank),
-            currentItem: Object.assign({}, this.addEditBlank),
-            list: JSON.parse(localStorage.getItem('toDoList')) || [],
-            areAllItemsCompleted: false
-        };
-    }
-
-    updateLocalStorage(list) {
-        localStorage.setItem('toDoList', JSON.stringify(list));
-    }
-
-    createToDoItem(newItem) {
-        this.state.list.push(newItem);
-        this.updateLocalStorage(this.state.list);
-        this.setState({
-            list: this.state.list,
-        });
-    }
-
-    chooseToDoItem(item) {
-        this.setState({currentItem: item});
-    }
-
-    updateToDoItem(updatedItem) {
-        let index = this.state.list.findIndex((item) => item.id === updatedItem.id);
-        updatedItem.isDone = this.state.list[index].isDone;
-
-        this.state.list[index] = updatedItem;
-        this.updateLocalStorage(this.state.list);
-        this.setState({
-            list: this.state.list,
-            currentItem: Object.assign({}, this.addEditBlank)
-        });
-    }
-
-    deleteToDoItem(id) {
-        let newLIst = this.state.list.filter(item => item.id !== id);
-
-        this.updateLocalStorage(newLIst);
-        this.setState({
-            list: newLIst,
-            currentItem: Object.assign({}, this.addEditBlank)
-        });
-    }
-
-    handleFilterChange(changes) {
-        this.setState({
-            filters: Object.assign(this.state.filters, changes)
-        });
-    }
-
-    onDoneToggle(id) {
-        let index = this.state.list.findIndex((item) => item.id === id);
-
-        this.state.list[index].isDone = !this.state.list[index].isDone;
-        this.updateLocalStorage(this.state.list);
-        this.setState({
-            list: this.state.list,
-            areAllItemsCompleted: this.areAllItemsCompleted()
-        });
-    }
-
-    areAllItemsCompleted() {
-        if (!this.state.list.length) {
-            return false
+            priority: 2,
+            tags: ''
         }
-
-        return !this.state.list.some((item) => {
-            return item.isDone === false
-        });
-    }
-
-    onDoneAllToggle() {
-        let doneState = this.areAllItemsCompleted();
-
-        this.state.list.forEach((item) => {
-            return item.isDone = !doneState;
-        });
-        this.updateLocalStorage(this.state.list);
-        this.setState({
-            list: this.state.list,
-            areAllItemsCompleted: this.areAllItemsCompleted()
-        });
-    }
-
-    deleteAllCompleted() {
-        let list = this.state.list.filter((item) => {
-            return item.isDone === false
-        });
-        this.setState({
-            list: list
-        });
-        this.updateLocalStorage(list);
-    }
+    };
 
     makeTagList() {
         let allTags = [];
         let uniqueTagList = [];
 
-        this.state.list.forEach((item) => {
+        this.props.data.list.forEach((item) => {
             if (item.tags) {
                 allTags = allTags.concat(item.tags.split(', '))
             }
@@ -136,43 +34,46 @@ class App extends Component {
         return uniqueTagList;
     }
 
-    render() {
-        let AddOrEditPanel;
+    chooseItem(item) {
+        this.setState({shownItem: item});
+    }
 
-        if (this.state.currentItem.id) {
-            AddOrEditPanel =
-                <EditItem
-                    currentItem={this.state.currentItem}
-                    onUpdateItem={this.updateToDoItem.bind(this)}/>
-        } else {
-            AddOrEditPanel =
-                <AddItem
-                    onAddItem={this.createToDoItem.bind(this)}/>
-        }
+    render() {
         return (
             <div className="app">
                 <Filters
-                    config={this.state.filters}
-                    onFiltersChange={this.handleFilterChange.bind(this)}
+                    config={this.props.data.filters}
+                    action={actionCreators.applyFilter}
                     tags={this.makeTagList()}/>
+
                 <List
-                    list={this.state.list}
-                    filters={this.state.filters}
-                    onDelete={this.deleteToDoItem.bind(this)}
-                    onEdit={this.chooseToDoItem.bind(this)}
-                    onDoneToggle={this.onDoneToggle.bind(this)}
-                    onDoneAllToggle={this.onDoneAllToggle.bind(this)}
-                    areAllItemsCompleted={this.state.areAllItemsCompleted}
-                    onDeleteAllCompleted={this.deleteAllCompleted.bind(this)}/>
-                {AddOrEditPanel}
+                    list={this.props.data.list}
+                    filters={this.props.data.filters}
+                    doneToggle={actionCreators.doneToggle}
+                    markAllDone={actionCreators.markAllDone}
+                    chooseItem={this.chooseItem.bind(this)}
+                    deleteItem={actionCreators.deleteItem}/>
+
+                <AddOrEditForm
+                    shownItem={this.state.shownItem}
+                    createItem={actionCreators.createItem}
+                    chooseItem={this.chooseItem.bind(this)}
+                    updateItem={actionCreators.updateItem}/>
             </div>
         );
     }
 }
-
-export default App;
+// function that will give App access to data in store as props after being wrapped into connect
+function mapStateToProps (data) {
+    return {
+        data: data
+    }
+}
+// wrap App into Connect React Component
+export default connect(mapStateToProps, {actionCreators})(App);
 
 /*
+sample for console:
 let toDoList = [{
             id: 1,
             title: 'to study React',
@@ -189,11 +90,25 @@ let toDoList = [{
             isDone: false
         }, {
             id: 3,
-            title: 'to buy milk',
+            title: 'to do something',
             description: 'Ololo-trololol',
-            tags: 'home, food, today',
+            tags: 'tag, tag2, tag5',
             priority: '3',
             isDone: true
+        }, {
+            id: 4,
+            title: 'to do something else',
+            description: 'Ololo-trololol',
+            tags: 'tag3, tag1 tag7, tag7',
+            priority: '3',
+            isDone: false
+        }, {
+            id: 5,
+            title: 'to do more than you can',
+            description: 'Ololo-trololol',
+            tags: 'tag1, tag5 tag1, tag4',
+            priority: '3',
+            isDone: false
         }];
         localStorage.setItem('toDoList', JSON.stringify(toDoList));
 * */

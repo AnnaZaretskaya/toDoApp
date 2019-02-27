@@ -1,91 +1,93 @@
-// there were 3 options to update component without unsafe_componentWillReceiveProps
-// 1. use static getDerivedStateFromProps with all filters handlers inside (leads to tremendous method size)
-// 2. merge render and logic (not works for my case)
-// 3. use memoize.
-// https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#what-about-memoization
-
 import React, {Component} from 'react';
 import ToDoItem from './toDoItem';
 import CompleteAllToggle from './CompleteAllToggle';
 import DeleteCompleted from './DeleteCompleted';
 import Left from './Left';
-import {Utils} from '../utils'
-import '../styles/list.panel.css';
+import '../../theme/list.panel.css';
 
 class List extends Component {
-    onDelete(id) {
-        this.props.onDelete(id);
-    }
-
-    onEdit(item) {
-        this.props.onEdit(item);
-    }
-
-    onDoneToggle(id) {
-        this.props.onDoneToggle(id);
-    }
 
     applyFilters() {
-
-        if (Utils.isEqual(this.props.filters, {
-            showUnDone: false,
-            content: '',
-            priorities: [],
-            selectedTags: []
-        })) {
-            return this.props.list;
-        }
-
         let filteredList = [].concat(this.props.list);
+        let filters = Object.assign({}, this.props.filters);
 
-        filteredList = this.applyShowUnDone(filteredList);
-        filteredList = this.applyContentFilter(filteredList);
-        filteredList = this.applyPrioritiesFilter(filteredList);
-        filteredList = this.applyTagsFilter(filteredList);
+        filteredList = this.filtersContainer.applyShowUnDone(filteredList, filters);
+        filteredList = this.filtersContainer.applyContentFilter(filteredList, filters);
+        filteredList = this.filtersContainer.applyPrioritiesFilter(filteredList, filters);
+        filteredList = this.filtersContainer.applyTagsFilter(filteredList, filters);
 
         return filteredList;
     }
 
-    applyShowUnDone(list) {
-        if (this.props.filters.showUnDone) {
-            list = list.filter((item) => {
-                return item.isDone === false;
-            });
-        }
-        return list;
-    }
-
-    applyContentFilter(list) {
-        list = list.filter((item) => {
-            return (item.title.includes(this.props.filters.content) || item.description.includes(this.props.filters.content))
-        });
-        return list;
-    }
-
-    applyPrioritiesFilter(list) {
-        if (this.props.filters.priorities.length) {
-            list = list.filter((item) => {
-                return this.props.filters.priorities.includes(item.priority)
-            });
-        }
-        return list;
-    }
-
-    applyTagsFilter(list) {
-        if (this.props.filters.selectedTags.length) {
-            list = list.filter((item) => {
-                return this.props.filters.selectedTags.some((selectedTag) => {
-                    return item.tags.split(', ').includes(selectedTag);
+    filtersContainer = {
+        applyShowUnDone:  (list, filters) => {
+            if (filters.showUnDone) {
+                list = list.filter((item) => {
+                    return item.isDone === false;
                 });
+            }
+            return list;
+        },
+
+        applyContentFilter: (list, filters) => {
+            list = list.filter((item) => {
+                return (item.title.includes(filters.content) || item.description.includes(filters.content))
             });
+            return list;
+        },
+
+        applyPrioritiesFilter: (list, filters) => {
+            if (filters.priorities.length) {
+                list = list.filter((item) => {
+                    return filters.priorities.includes(item.priority)
+                });
+            }
+            return list;
+        },
+
+        applyTagsFilter: (list, filters) => {
+            if (filters.selectedTags.length) {
+                list = list.filter((item) => {
+                    return filters.selectedTags.some((selectedTag) => {
+                        return item.tags.split(', ').includes(selectedTag);
+                    });
+                });
+            }
+            return list;
         }
-        return list;
+
+    };
+
+    areAllItemsCompleted() {
+        if (!this.props.list.length) {
+            return false
+        }
+
+        return !this.props.list.some((item) => {
+            return item.isDone === false;
+        });
+    }
+
+    onDoneAllToggle() {
+        this.areAllItemsCompleted()
+            ? this.props.markAllDone(false)
+            : this.props.markAllDone(true);
     }
 
     getNumberCompleted() {
         return this.props.list.filter((item) => {
             return item.isDone === true
         }).length
+    }
+
+    onDeleteAllDone() {
+        this.props.list
+            .filter((item) => {
+                return item.isDone === true
+                })
+            .forEach((item) => {
+                this.props.deleteItem(item.id);
+                });
     }
 
     render() {
@@ -98,21 +100,23 @@ class List extends Component {
                     <ToDoItem
                         key={item.id}
                         item={item}
-                        onDelete={this.onDelete.bind(this)}
-                        onEdit={this.onEdit.bind(this)}
-                        onDoneToggle={this.onDoneToggle.bind(this)}/>
+                        doneToggle={this.props.doneToggle}
+                        chooseItem={this.props.chooseItem}
+                        deleteItem={this.props.deleteItem}/>
                 );
             });
         }
+
         return (
             <main className="list-container">
                 <CompleteAllToggle
-                    onChange={this.props.onDoneAllToggle.bind(this)}
-                    isChecked={this.props.areAllItemsCompleted}/>
+                    onChange={this.onDoneAllToggle.bind(this)}
+                    isChecked={this.areAllItemsCompleted(this)}/>
                 <DeleteCompleted
-                    onDeleteAllCompleted={this.props.onDeleteAllCompleted.bind(this)}
+                    onDeleteAllDone={this.onDeleteAllDone.bind(this)}
                     number={this.getNumberCompleted()}/>
-                <Left number={this.props.list.length - this.getNumberCompleted()}/>
+                <Left
+                    number={this.props.list.length - this.getNumberCompleted()}/>
                 {toDoList}
             </main>
         );

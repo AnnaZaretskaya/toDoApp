@@ -8,7 +8,7 @@ class Title extends Component {
                     <input type="text"
                            form="create-edit-form"
                            name="title"
-                           value={this.props.value}
+                           value={this.props.value || ''}
                            onChange={this.props.onChange.bind(this)}/>
                 </label>
             </div>

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 
-// todo add datalist tag
 class Tags extends Component {
     render() {
         return (
@@ -9,7 +8,7 @@ class Tags extends Component {
                     <input type="text"
                            form="create-edit-form"
                            name="tags"
-                           value={this.props.value}
+                           value={this.props.value || ''}
                            onChange={this.props.onChange.bind(this)}/>
                 </label>
             </div>
@@ -18,4 +17,3 @@ class Tags extends Component {
 }
 
 export default Tags;
-

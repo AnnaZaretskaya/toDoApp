@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 
 class Content extends Component {
 
-    handleContentChange(event) {
-        this.props.onChange({content: event.currentTarget.value});
+    handleContentFilter(event) {
+        this.props.action({ content: event.currentTarget.value });
     }
 
     render() {
@@ -12,7 +12,7 @@ class Content extends Component {
                 <label>Show tasks with content<br/>
                     <input type="text"
                            name="content"
-                           onChange={this.handleContentChange.bind(this)}
+                           onChange={this.handleContentFilter.bind(this)}
                            value={this.props.content}/>
                 </label>
             </div>

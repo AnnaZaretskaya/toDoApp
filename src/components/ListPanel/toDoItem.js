@@ -3,15 +3,17 @@ import React, {Component} from 'react';
 class ToDoItem extends Component {
 
     handleTitleClick() {
-        this.props.onDoneToggle(this.props.item.id);
+        this.props.doneToggle(this.props.item.id);
     };
 
     handleEditButtonClick() {
-        this.props.onEdit(this.props.item);
+        this.props.chooseItem(this.props.item)
     };
 
     handleDeleteButtonClick() {
-        this.props.onDelete(this.props.item.id);
+        this.props.deleteItem(this.props.item.id);
+
+        this.props.chooseItem({id: null});
     };
 
     render() {

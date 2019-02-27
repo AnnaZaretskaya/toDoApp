@@ -3,35 +3,30 @@ import ShowUnDoneItems from './ShowUnDoneItems';
 import Content from './Content';
 import Priorities from "./Priorities";
 import Tags from "./Tags";
-import '../styles/filter.panel.css';
+import '../../theme/filter.panel.css';
 
 class Filters extends Component {
 
-    onChange(change) {
-        this.props.onFiltersChange(change);
-    }
-
     render() {
-
         return (
             <aside className="left-aside filters-container">
 
                 <ShowUnDoneItems
-                    onChange={this.onChange.bind(this)}
-                    isChecked={this.props.config.showUnDone}/>
+                        showUnDone={this.props.config.showUnDone}
+                        action={this.props.action}/>
 
                 <Content
-                    onChange={this.onChange.bind(this)}
-                    content={this.props.config.content}/>
+                        content={this.props.config.content}
+                        action={this.props.action}/>
 
                 <Priorities
-                    onChange={this.onChange.bind(this)}
-                    priorities={this.props.config.priorities}/>
+                        priorities={this.props.config.priorities}
+                        action={this.props.action}/>
 
                 <Tags
-                    onChange={this.onChange.bind(this)}
-                    tags={this.props.tags}
-                    selectedTags={this.props.config.selectedTags}/>
+                        action={this.props.action}
+                        tags={this.props.tags}
+                        selectedTags={this.props.config.selectedTags}/>
             </aside>
         );
     }

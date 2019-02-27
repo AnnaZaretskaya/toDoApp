@@ -1,4 +1,3 @@
-// todo make it deep
 export class Utils {
 
     static isEqual(a, b) {
