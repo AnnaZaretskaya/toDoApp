@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 
-class Content extends Component {
+export default class Content extends Component {
 
     handleContentFilter(event) {
-        this.props.action({ content: event.currentTarget.value });
+        this.props.onChange({ content: event.currentTarget.value });
     }
 
     render() {
@@ -13,11 +13,9 @@ class Content extends Component {
                     <input type="text"
                            name="content"
                            onChange={this.handleContentFilter.bind(this)}
-                           value={this.props.content}/>
+                           value={this.props.value}/>
                 </label>
             </div>
         )
     }
 }
-
-export default Content;

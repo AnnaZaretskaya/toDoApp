@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 
-class ShowUnDoneItems extends Component {
+export default class ShowUnDoneItems extends Component {
 
     handleShowUnDoneToggle(event) {
-        this.props.action({ showUnDone: event.currentTarget.checked });
+        this.props.onChange({ showUnDone: event.currentTarget.checked });
     };
 
     render() {
@@ -13,12 +13,10 @@ class ShowUnDoneItems extends Component {
                     <input type="checkbox"
                            name="showUnDone"
                            onChange={this.handleShowUnDoneToggle.bind(this)}
-                           checked={this.props.showUnDone}/>
+                           checked={this.props.isChecked}/>
                     Show unfinished tasks
                 </label>
             </div>
         )
     }
 }
-
-export default ShowUnDoneItems;

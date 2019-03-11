@@ -1,7 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
-class CompleteAllToggle extends Component {
-
+export default class CompleteAllToggle extends Component {
     render() {
         return (
             <div className="field-set complete-all-toggle">
@@ -15,5 +14,3 @@ class CompleteAllToggle extends Component {
         )
     }
 }
-
-export default CompleteAllToggle;

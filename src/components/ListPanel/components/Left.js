@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class Left extends Component {
+export default class Left extends Component {
     render() {
         if (this.props.number) {
             return (
@@ -13,5 +13,3 @@ class Left extends Component {
         }
     }
 }
-
-export default Left;

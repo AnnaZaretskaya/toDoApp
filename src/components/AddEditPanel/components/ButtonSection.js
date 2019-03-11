@@ -34,7 +34,7 @@ class ButtonSection extends Component {
                     </button>
 
                     <button className="cancel"
-                            onClick={this.props.onCancel.bind(this)}>
+                            onClick={this.props.onReset.bind(this)}>
                         cancel
                     </button>
                 </div>

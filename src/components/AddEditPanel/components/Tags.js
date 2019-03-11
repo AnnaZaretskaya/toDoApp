@@ -1,6 +1,14 @@
 import React, {Component} from 'react';
 
 class Tags extends Component {
+
+    handleChange(event) {
+        let change = {};
+        change[event.currentTarget.name] = event.currentTarget.value;
+
+        this.props.onChange(change);
+    }
+
     render() {
         return (
             <div className="field-set">
@@ -8,8 +16,8 @@ class Tags extends Component {
                     <input type="text"
                            form="create-edit-form"
                            name="tags"
-                           value={this.props.value || ''}
-                           onChange={this.props.onChange.bind(this)}/>
+                           value={this.props.value}
+                           onChange={this.handleChange.bind(this)}/>
                 </label>
             </div>
         );

@@ -1,18 +1,26 @@
-import { ACTION_TYPE } from './actions';
-
-export function filters(filters = {}, action) {
-    return (action.type === ACTION_TYPE.FILTER)
-        ? Object.assign({}, filters, action.change)
-        : filters
-}
+import { ACTION_TYPE } from './actionsType';
 
 export function list(list = [], action) {
-    return (action.type === ACTION_TYPE.LIST_EDIT)
-        ? newList[action.name](list, action)
-        : list
+    if (action.type === ACTION_TYPE.LIST_EDIT) {
+        switch (action.name) {
+            case ACTION_TYPE.UPDATE_ITEM:
+                return listReducer.updateItem(list, action);
+            case ACTION_TYPE.DELETE_ITEM:
+                return listReducer.deleteItem(list, action);
+            case ACTION_TYPE.ADD_ITEM:
+                return listReducer.addItem(list, action);
+            case ACTION_TYPE.DONE_TOGGLE:
+                return listReducer.doneToggle(list, action);
+            case ACTION_TYPE.MARK_ALL_DONE:
+                return listReducer.markAllDone(list, action);
+            default:
+                return list
+        }
+    }
+    return list
 }
 
-let newList = {
+let listReducer = {
     addItem: (list, action) => {
         return action.item
             ? [].concat(list, action.item)

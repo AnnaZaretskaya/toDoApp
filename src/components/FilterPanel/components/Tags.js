@@ -9,7 +9,7 @@ class Tags extends Component {
             ? change.splice(change.indexOf(event.target.innerText), 1)
             : change = change.concat([event.target.innerText]);
 
-        this.props.action({ selectedTags: change });
+        this.props.onChange({ selectedTags: change });
     }
 
     render() {

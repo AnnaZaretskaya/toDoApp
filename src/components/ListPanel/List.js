@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
-import ToDoItem from './toDoItem';
-import CompleteAllToggle from './CompleteAllToggle';
-import DeleteCompleted from './DeleteCompleted';
-import Left from './Left';
+import ToDoItem from './components/toDoItem';
+import CompleteAllToggle from './components/CompleteAllToggle';
+import DeleteCompleted from './components/DeleteCompleted';
+import Left from './components/Left';
 import '../../theme/list.panel.css';
+import { actionsList } from './List.actions';
+import { connect } from 'react-redux';
+import { actionsShared } from "../shared.actions";
 
 class List extends Component {
 
@@ -49,7 +52,7 @@ class List extends Component {
             if (filters.selectedTags.length) {
                 list = list.filter((item) => {
                     return filters.selectedTags.some((selectedTag) => {
-                        return item.tags.split(', ').includes(selectedTag);
+                        return item.tags.includes(selectedTag);
                     });
                 });
             }
@@ -70,8 +73,8 @@ class List extends Component {
 
     onDoneAllToggle() {
         this.areAllItemsCompleted()
-            ? this.props.markAllDone(false)
-            : this.props.markAllDone(true);
+            ? actionsListExtended.markAllDone(false)
+            : actionsListExtended.markAllDone(true);
     }
 
     getNumberCompleted() {
@@ -86,7 +89,7 @@ class List extends Component {
                 return item.isDone === true
                 })
             .forEach((item) => {
-                this.props.deleteItem(item.id);
+                actionsListExtended.deleteItem(item.id);
                 });
     }
 
@@ -100,9 +103,9 @@ class List extends Component {
                     <ToDoItem
                         key={item.id}
                         item={item}
-                        doneToggle={this.props.doneToggle}
-                        chooseItem={this.props.chooseItem}
-                        deleteItem={this.props.deleteItem}/>
+                        doneToggle={actionsListExtended.doneToggle}
+                        chooseItem={actionsListExtended.chooseShownItem}
+                        deleteItem={actionsListExtended.deleteItem}/>
                 );
             });
         }
@@ -123,4 +126,13 @@ class List extends Component {
     }
 }
 
-export default List;
+function mapStateToProps (data) {
+    return {
+        list: data.list,
+        filters: data.filters
+    }
+}
+
+let actionsListExtended = {...actionsShared, ...actionsList};
+
+export default connect(mapStateToProps, actionsListExtended)(List);

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class DeleteCompleted extends Component {
+export default class DeleteCompleted extends Component {
 
     render() {
         return (
@@ -15,4 +15,3 @@ class DeleteCompleted extends Component {
     }
 }
 
-export default DeleteCompleted;

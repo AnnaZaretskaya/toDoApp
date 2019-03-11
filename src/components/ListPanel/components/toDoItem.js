@@ -7,13 +7,11 @@ class ToDoItem extends Component {
     };
 
     handleEditButtonClick() {
-        this.props.chooseItem(this.props.item)
+        this.props.chooseItem(this.props.item.id)
     };
 
     handleDeleteButtonClick() {
         this.props.deleteItem(this.props.item.id);
-
-        this.props.chooseItem({id: null});
     };
 
     render() {
@@ -28,9 +26,10 @@ class ToDoItem extends Component {
                     {this.props.item.title}
                 </h4>
                 <p className="task-description">{this.props.item.description}</p>
-                <p className="task-tags">{this.props.item.tags}</p>
+                <p className="task-tags">{this.props.item.tags.join(', ')}</p>
                 <button className="edit"
-                        onClick={this.handleEditButtonClick.bind(this)}>Edit
+                      onClick={this.handleEditButtonClick.bind(this)}>
+                        Edit
                 </button>
                 <button className="remove"
                         onClick={this.handleDeleteButtonClick.bind(this)}>Remove

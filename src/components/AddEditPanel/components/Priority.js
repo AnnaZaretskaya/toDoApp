@@ -1,6 +1,14 @@
 import React, {Component} from 'react';
 
 class Priority extends Component {
+
+    handleChange(event) {
+        let change = {};
+        change[event.currentTarget.name] = event.currentTarget.value;
+
+        this.props.onChange(change);
+    }
+
     render() {
         return (
             <div className="field-set">
@@ -9,7 +17,7 @@ class Priority extends Component {
                     <input type="radio"
                            name="priority"
                            value="1"
-                           onChange={this.props.onChange.bind(this)}
+                           onChange={this.handleChange.bind(this)}
                            checked={Number(this.props.value) === 1}/>
                     Low
                 </label>
@@ -17,7 +25,7 @@ class Priority extends Component {
                     <input type="radio"
                            name="priority"
                            value="2"
-                           onChange={this.props.onChange.bind(this)}
+                           onChange={this.handleChange.bind(this)}
                            checked={Number(this.props.value) === 2}/>
                     Medium
                 </label>
@@ -25,7 +33,7 @@ class Priority extends Component {
                     <input type="radio"
                            name="priority"
                            value="3"
-                           onChange={this.props.onChange.bind(this)}
+                           onChange={this.handleChange.bind(this)}
                            checked={Number(this.props.value) === 3}/>
                     Hight
                 </label>
