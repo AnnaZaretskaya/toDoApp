@@ -8,24 +8,6 @@ import '../../theme/filter.panel.css';
 import { actionsFilters } from './Filters.actions';
 
 class Filters extends Component {
-
-    makeTagList(list) {
-        let allTags = [];
-        let uniqueTagList = [];
-
-        list.forEach((item) => {
-            if (item.tags) {
-                allTags = allTags.concat(item.tags)
-            }
-        });
-        allTags.forEach(tag => {
-            if (!uniqueTagList.includes(tag)) {
-                uniqueTagList.push(tag);
-            }
-        });
-        return uniqueTagList;
-    }
-
     render() {
         return (
             <aside className="left-aside filters-container">
@@ -44,7 +26,7 @@ class Filters extends Component {
 
                 <Tags
                         onChange={actionsFilters.applyFilter}
-                        tags={this.makeTagList(this.props.list)}
+                        tags={this.props.uniqueTagList}
                         selectedTags={this.props.filters.selectedTags}/>
             </aside>
         );
@@ -52,9 +34,26 @@ class Filters extends Component {
 }
 
 function mapStateToProps (data) {
+    function makeTagList(list) {
+        let allTags = [];
+        let uniqueTagList = [];
+
+        list.forEach((item) => {
+            if (item.tags) {
+                allTags = allTags.concat(item.tags)
+            }
+        });
+        allTags.forEach(tag => {
+            if (!uniqueTagList.includes(tag)) {
+                uniqueTagList.push(tag);
+            }
+        });
+        return uniqueTagList;
+    }
+
     return {
         filters: data.filters,
-        list: data.list
+        uniqueTagList: makeTagList(data.list)
     }
 }
 
