@@ -1,14 +1,7 @@
 import React, {Component} from 'react';
+import WithHandler from "../../HOC/WithHandler";
 
 class Priority extends Component {
-
-    handleChange(event) {
-        let change = {};
-        change[event.currentTarget.name] = event.currentTarget.value;
-
-        this.props.onChange(change);
-    }
-
     render() {
         return (
             <div className="field-set">
@@ -17,7 +10,7 @@ class Priority extends Component {
                     <input type="radio"
                            name="priority"
                            value="1"
-                           onChange={this.handleChange.bind(this)}
+                           onChange={this.props.handleChange.bind(this)}
                            checked={Number(this.props.value) === 1}/>
                     Low
                 </label>
@@ -25,7 +18,7 @@ class Priority extends Component {
                     <input type="radio"
                            name="priority"
                            value="2"
-                           onChange={this.handleChange.bind(this)}
+                           onChange={this.props.handleChange.bind(this)}
                            checked={Number(this.props.value) === 2}/>
                     Medium
                 </label>
@@ -33,7 +26,7 @@ class Priority extends Component {
                     <input type="radio"
                            name="priority"
                            value="3"
-                           onChange={this.handleChange.bind(this)}
+                           onChange={this.props.handleChange.bind(this)}
                            checked={Number(this.props.value) === 3}/>
                     Hight
                 </label>
@@ -42,4 +35,6 @@ class Priority extends Component {
     }
 }
 
-export default Priority;
+const PriorityWithHandler = WithHandler(Priority);
+
+export default PriorityWithHandler;

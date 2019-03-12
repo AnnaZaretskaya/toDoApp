@@ -1,13 +1,7 @@
 import React, {Component} from 'react';
+import WithHandler from '../../HOC/WithHandler';
 
 class Description extends Component {
-
-    handleChange(event) {
-        let change = {};
-        change[event.currentTarget.name] = event.currentTarget.value;
-
-        this.props.onChange(change);
-    }
 
     render() {
         return (
@@ -15,7 +9,7 @@ class Description extends Component {
                 <label htmlFor="task-description">description<br/>
                     <textarea form="create-edit-form"
                               name="description"
-                              onChange={this.handleChange.bind(this)}
+                              onChange={this.props.handleChange.bind(this)}
                               value={this.props.value}/>
                 </label>
             </div>
@@ -23,4 +17,6 @@ class Description extends Component {
     }
 }
 
-export default Description;
+const DescriptionWithHandler = WithHandler(Description);
+
+export default DescriptionWithHandler;

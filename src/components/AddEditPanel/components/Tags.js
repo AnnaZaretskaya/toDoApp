@@ -1,14 +1,7 @@
 import React, {Component} from 'react';
+import WithHandler from "../../HOC/WithHandler";
 
 class Tags extends Component {
-
-    handleChange(event) {
-        let change = {};
-        change[event.currentTarget.name] = event.currentTarget.value;
-
-        this.props.onChange(change);
-    }
-
     render() {
         return (
             <div className="field-set">
@@ -17,11 +10,13 @@ class Tags extends Component {
                            form="create-edit-form"
                            name="tags"
                            value={this.props.value}
-                           onChange={this.handleChange.bind(this)}/>
+                           onChange={this.props.handleChange.bind(this)}/>
                 </label>
             </div>
         );
     }
 }
 
-export default Tags;
+const TagsWithHandler = WithHandler(Tags);
+
+export default TagsWithHandler;

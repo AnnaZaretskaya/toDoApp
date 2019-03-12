@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 class ButtonSection extends Component {
     render() {
         if (this.props.isCreateMode) {
-
             return (
                 <div className="create-buttons buttons-control">
                     <button className="create"

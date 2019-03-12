@@ -1,9 +1,9 @@
-import Tags from './components/Tags';
-import Title from './components/Title';
+import TagsWithHandler from './components/Tags';
+import TitleWithHandler from './components/Title';
 import React, {Component} from 'react';
-import Priority from './components/Priority';
+import PriorityWithHandler from './components/Priority';
 import initState from '../../storeUtils/initialStoreState';
-import Description from './components/Description';
+import DescriptionWithHandler from './components/Description';
 import _ from 'underscore';
 import ButtonSection from './components/ButtonSection';
 import { connect } from 'react-redux';
@@ -72,19 +72,19 @@ class AddOrEditPanel extends Component {
             <aside className="add-edit-panel">
                 <form className="">
 
-                    <Title
+                    <TitleWithHandler
                         onChange={actionsEditPanelExtended.shownItemChange}
                         value={this.props.shownItem.title}/>
 
-                    <Description
+                    <DescriptionWithHandler
                         onChange={actionsEditPanelExtended.shownItemChange}
                         value={this.props.shownItem.description}/>
 
-                    <Tags
+                    <TagsWithHandler
                         onChange={actionsEditPanelExtended.shownItemChange}
                         value={this.props.shownItem.tags}/>
 
-                    <Priority
+                    <PriorityWithHandler
                         onChange={actionsEditPanelExtended.shownItemChange}
                         value={this.props.shownItem.priority}/>
 

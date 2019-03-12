@@ -1,18 +1,14 @@
 import React, {Component} from 'react';
+import WithHandler from "../../HOC/WithHandler";
 
-export default class ShowUnDoneItems extends Component {
-
-    handleShowUnDoneToggle(event) {
-        this.props.onChange({ showUnDone: event.currentTarget.checked });
-    };
-
+class ShowUnDoneItems extends Component {
     render() {
         return (
             <div className="field-set done-filter">
                 <label>
                     <input type="checkbox"
                            name="showUnDone"
-                           onChange={this.handleShowUnDoneToggle.bind(this)}
+                           onChange={this.props.handleChange.bind(this)}
                            checked={this.props.isChecked}/>
                     Show unfinished tasks
                 </label>
@@ -20,3 +16,7 @@ export default class ShowUnDoneItems extends Component {
         )
     }
 }
+
+const ShowUnDoneItemsWithHandler = WithHandler(ShowUnDoneItems);
+
+export default ShowUnDoneItemsWithHandler;

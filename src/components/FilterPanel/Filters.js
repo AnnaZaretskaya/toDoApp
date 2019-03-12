@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import ShowUnDoneItems from './components/ShowUnDoneItems';
-import Content from './components/Content';
-import Priorities from "./components/Priorities";
-import Tags from "./components/Tags";
+import ShowUnDoneItemsWithHandler from './components/ShowUnDoneItems';
+import ContentWithHandler from './components/Content';
+import PrioritiesWithHandler from "./components/Priorities";
+import TagsWithHandler from "./components/Tags";
 import { connect } from 'react-redux';
 import '../../theme/filter.panel.css';
 import { actionsFilters } from './Filters.actions';
@@ -12,19 +12,19 @@ class Filters extends Component {
         return (
             <aside className="left-aside filters-container">
 
-                <ShowUnDoneItems
-                        isChecked={this.props.filters.showUnDone}
+                <ShowUnDoneItemsWithHandler
+                        value={this.props.filters.showUnDone}
                         onChange={actionsFilters.applyFilter}/>
 
-                <Content
+                <ContentWithHandler
                         value={this.props.filters.content}
                         onChange={actionsFilters.applyFilter}/>
 
-                <Priorities
+                <PrioritiesWithHandler
                         value={this.props.filters.priorities}
                         onChange={actionsFilters.applyFilter}/>
 
-                <Tags
+                <TagsWithHandler
                         onChange={actionsFilters.applyFilter}
                         tags={this.props.uniqueTagList}
                         selectedTags={this.props.filters.selectedTags}/>

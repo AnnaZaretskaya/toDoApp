@@ -1,4 +1,8 @@
 import React, {Component} from 'react';
+import WithHandler from "../../HOC/WithHandler";
+
+// пишу для придурков: event.target - то где сработало событие
+// event.currentTarget - то на чем висит обработчик собития
 
 class Tags extends Component {
 
@@ -26,12 +30,13 @@ class Tags extends Component {
                 <span>Show tasks with tags</span>
                 <ul className="tags-list"
                     data-name="tags"
-                    onClick={this.handleTagsFilter.bind(this)}>
+                    onClick={this.props.handleChange.bind(this)}>
                     {tagList}
                 </ul>
             </div>
         )
     }
 }
+const TagsWithHandler = WithHandler(Tags);
 
-export default Tags;
+export default TagsWithHandler;
