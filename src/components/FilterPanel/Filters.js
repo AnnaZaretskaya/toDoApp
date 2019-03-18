@@ -1,33 +1,36 @@
-import React, {Component} from 'react';
-import ShowUnDoneItemsWithHandler from './components/ShowUnDoneItems';
-import ContentWithHandler from './components/Content';
-import PrioritiesWithHandler from "./components/Priorities";
-import TagsWithHandler from "./components/Tags";
+import Tags from "./components/Tags";
 import { connect } from 'react-redux';
 import '../../theme/filter.panel.css';
+import React, {Component} from 'react';
+import Content from './components/Content';
+import Priorities from './components/Priorities';
 import { actionsFilters } from './Filters.actions';
+import ShowUnDoneItems from "./components/ShowUnDoneItems";
 
 class Filters extends Component {
     render() {
         return (
             <aside className="left-aside filters-container">
+                <form id="filter-form">
 
-                <ShowUnDoneItemsWithHandler
-                        value={this.props.filters.showUnDone}
-                        onChange={actionsFilters.applyFilter}/>
+                    <ShowUnDoneItems
+                            value={this.props.filters.showUnDone}
+                            onChange={actionsFilters.applyFilter}/>
 
-                <ContentWithHandler
-                        value={this.props.filters.content}
-                        onChange={actionsFilters.applyFilter}/>
+                    <Content
+                            value={this.props.filters.content}
+                            onChange={actionsFilters.applyFilter}/>
 
-                <PrioritiesWithHandler
-                        value={this.props.filters.priorities}
-                        onChange={actionsFilters.applyFilter}/>
+                    <Priorities
+                            value={this.props.filters.priorities}
+                            onChange={actionsFilters.applyFilter}/>
 
-                <TagsWithHandler
-                        onChange={actionsFilters.applyFilter}
-                        tags={this.props.uniqueTagList}
-                        selectedTags={this.props.filters.selectedTags}/>
+                    <Tags
+                            onChange={actionsFilters.applyFilter}
+                            tags={this.props.uniqueTagList}
+                            selectedTags={this.props.filters.selectedTags}/>
+
+                </form>
             </aside>
         );
     }

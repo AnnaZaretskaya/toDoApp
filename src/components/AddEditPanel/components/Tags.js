@@ -1,22 +1,17 @@
-import React, {Component} from 'react';
-import WithHandler from "../../HOC/WithHandler";
+import {compose, setDisplayName, withHandlers, withProps} from "recompose";
+import BaseTextInput from "../../sharedComponents/BaseTextInput";
+import handleChange from "../../sharedComponents/commonOnChangeHandler";
 
-class Tags extends Component {
-    render() {
-        return (
-            <div className="field-set">
-                <label htmlFor="task-tags">tags<br/>
-                    <input type="text"
-                           form="create-edit-form"
-                           name="tags"
-                           value={this.props.value}
-                           onChange={this.props.handleChange.bind(this)}/>
-                </label>
-            </div>
-        );
-    }
-}
+const Tags = compose(
+    setDisplayName('Tags'),
+    withProps({
+        componentLabel: 'tags',
+        formName: 'add-edit-form',
+        inputName: 'tags'
+    }),
+    withHandlers({
+        onChange: props => event => handleChange(event, props)
+    })
+)(BaseTextInput);
 
-const TagsWithHandler = WithHandler(Tags);
-
-export default TagsWithHandler;
+export default Tags;

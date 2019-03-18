@@ -1,16 +1,14 @@
-import TagsWithHandler from './components/Tags';
-import TitleWithHandler from './components/Title';
-import React, {Component} from 'react';
-import PriorityWithHandler from './components/Priority';
-import initState from '../../storeUtils/initialStoreState';
-import DescriptionWithHandler from './components/Description';
 import _ from 'underscore';
-import ButtonSection from './components/ButtonSection';
+import Tags from './components/Tags';
 import { connect } from 'react-redux';
+import Title from './components/Title';
+import React, {Component} from 'react';
+import Priority from './components/Priority';
 import { actionsShared } from "../shared.actions";
+import Description from './components/Description';
+import ButtonSection from './components/ButtonSection';
+import initState from '../../storeUtils/initialStoreState';
 import { actionsEditPanel } from './AddOrEditPanel.actions';
-import {store} from "../../index";
-
 
 class AddOrEditPanel extends Component {
 
@@ -70,23 +68,23 @@ class AddOrEditPanel extends Component {
 
         return (
             <aside className="add-edit-panel">
-                <form className="">
+                <form id="add-edit-form">
 
-                    <TitleWithHandler
+                    <Title
                         onChange={actionsEditPanelExtended.shownItemChange}
                         value={this.props.shownItem.title}/>
 
-                    <DescriptionWithHandler
+                    <Description
                         onChange={actionsEditPanelExtended.shownItemChange}
                         value={this.props.shownItem.description}/>
 
-                    <TagsWithHandler
+                    <Tags
                         onChange={actionsEditPanelExtended.shownItemChange}
                         value={this.props.shownItem.tags}/>
 
-                    <PriorityWithHandler
+                    <Priority
                         onChange={actionsEditPanelExtended.shownItemChange}
-                        value={this.props.shownItem.priority}/>
+                        value={[this.props.shownItem.priority]}/>
 
                     <ButtonSection
                         isValid={isFormValid}
@@ -110,13 +108,6 @@ function mapStateToProps(data) {
         editedItem = Object.assign({}, data.list.find((item) => {
             return item.id === data.shownItem.id
         }));
-
-        if (typeof editedItem.tags === 'string' || !editedItem.tags) {
-            console.log('error');
-            console.log('id is', editedItem.id);
-            console.log('list is', store.getState().list);
-        }
-
         editedItem.tags = editedItem.tags.join(', ');
     }
 

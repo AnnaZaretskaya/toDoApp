@@ -1,21 +1,17 @@
-import React, {Component} from 'react';
-import WithHandler from "../../HOC/WithHandler";
+import {compose, setDisplayName, withHandlers, withProps} from "recompose";
+import BaseTextInput from "../../sharedComponents/BaseTextInput";
+import handleChange from "../../sharedComponents/commonOnChangeHandler";
 
-class Content extends Component {
-    render() {
-        return (
-            <div className="field-set content-filter">
-                <label>Show tasks with content<br/>
-                    <input type="text"
-                           name="content"
-                           onChange={this.props.handleChange.bind(this)}
-                           value={this.props.value}/>
-                </label>
-            </div>
-        )
-    }
-}
+const Content = compose(
+    setDisplayName('Content'),
+    withProps({
+        componentLabel: 'Show tasks with content',
+        formName: 'filter-form',
+        inputName: 'content'
+    }),
+    withHandlers({
+        onChange: props => event => handleChange(event, props)
+    })
+)(BaseTextInput);
 
-const ContentWithHandler = WithHandler(Content);
-
-export default ContentWithHandler;
+export default Content;

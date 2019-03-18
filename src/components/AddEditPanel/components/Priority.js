@@ -1,40 +1,66 @@
-import React, {Component} from 'react';
-import WithHandler from "../../HOC/WithHandler";
+import {compose, setDisplayName, withHandlers, withProps} from "recompose";
+import BasePriorityInput from "../../sharedComponents/BasePriorityInput";
+import handleChange from "../../sharedComponents/commonOnChangeHandler";
 
-class Priority extends Component {
-    render() {
-        return (
-            <div className="field-set">
-                <p>priority</p>
-                <label>
-                    <input type="radio"
-                           name="priority"
-                           value="1"
-                           onChange={this.props.handleChange.bind(this)}
-                           checked={Number(this.props.value) === 1}/>
-                    Low
-                </label>
-                <label>
-                    <input type="radio"
-                           name="priority"
-                           value="2"
-                           onChange={this.props.handleChange.bind(this)}
-                           checked={Number(this.props.value) === 2}/>
-                    Medium
-                </label>
-                <label>
-                    <input type="radio"
-                           name="priority"
-                           value="3"
-                           onChange={this.props.handleChange.bind(this)}
-                           checked={Number(this.props.value) === 3}/>
-                    Hight
-                </label>
-            </div>
-        );
-    }
-}
+const Priority = compose(
+    setDisplayName('Priority'),
+    withProps({
+        componentLabel: 'priority',
+        formName: 'add-edit-form',
+        inputName: 'priority',
+        inputType: 'radio'
+    }),
+    withHandlers({
+        onChange: props => event => handleChange(event, props)
+    })
+)(BasePriorityInput);
 
-const PriorityWithHandler = WithHandler(Priority);
+export default Priority;
 
-export default PriorityWithHandler;
+
+// import React, {Component} from 'react';
+//
+// class Priority extends Component {
+//
+//     handleChange(event) {
+//
+//         this.props.onChange({priority: event.currentTarget.value});
+//     }
+//
+//     render() {
+//         return (
+//             <div className="field-set">
+//                 <p>priority</p>
+//                 <label>
+//                     <input form="add-edit-form"
+//                            type="radio"
+//                            name="priority"
+//                            value="1"
+//                            onChange={this.handleChange.bind(this)}
+//                            checked={Number(this.props.value) === 1}/>
+//                     Low
+//                 </label>
+//                 <label>
+//                     <input form="add-edit-form"
+//                            type="radio"
+//                            name="priority"
+//                            value="2"
+//                            onChange={this.handleChange.bind(this)}
+//                            checked={Number(this.props.value) === 2}/>
+//                     Medium
+//                 </label>
+//                 <label>
+//                     <input form="add-edit-form"
+//                            type="radio"
+//                            name="priority"
+//                            value="3"
+//                            onChange={this.handleChange.bind(this)}
+//                            checked={Number(this.props.value) === 3}/>
+//                     Hight
+//                 </label>
+//             </div>
+//         );
+//     }
+// }
+//
+// export default Priority;

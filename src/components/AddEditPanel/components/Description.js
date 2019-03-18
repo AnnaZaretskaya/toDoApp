@@ -1,22 +1,17 @@
-import React, {Component} from 'react';
-import WithHandler from '../../HOC/WithHandler';
+import {compose, setDisplayName, withHandlers, withProps} from "recompose";
+import BaseTextInput from "../../sharedComponents/BaseTextInput";
+import handleChange from "../../sharedComponents/commonOnChangeHandler";
 
-class Description extends Component {
+const Description = compose(
+    setDisplayName('Description'),
+    withProps({
+        componentLabel: 'description',
+        formName: 'add-edit-form',
+        inputName: 'description'
+    }),
+    withHandlers({
+        onChange: props => event => handleChange(event, props)
+    })
+)(BaseTextInput);
 
-    render() {
-        return (
-            <div className="field-set">
-                <label htmlFor="task-description">description<br/>
-                    <textarea form="create-edit-form"
-                              name="description"
-                              onChange={this.props.handleChange.bind(this)}
-                              value={this.props.value}/>
-                </label>
-            </div>
-        )
-    }
-}
-
-const DescriptionWithHandler = WithHandler(Description);
-
-export default DescriptionWithHandler;
+export default Description;

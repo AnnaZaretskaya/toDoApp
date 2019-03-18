@@ -1,22 +1,17 @@
-import React, {Component} from 'react';
-import WithHandler from "../../HOC/WithHandler";
+import {compose, setDisplayName, withHandlers, withProps} from "recompose";
+import BaseTextInput from "../../sharedComponents/BaseTextInput";
+import handleChange from "../../sharedComponents/commonOnChangeHandler";
 
-class Title extends Component {
-    render() {
-        return (
-            <div className="field-set">
-                <label htmlFor="task-title">title<br/>
-                    <input type="text"
-                           form="create-edit-form"
-                           name="title"
-                           value={this.props.value}
-                           onChange={this.props.handleChange.bind(this)}/>
-                </label>
-            </div>
-        )
-    }
-}
+const Title = compose(
+    setDisplayName('Title'),
+    withProps({
+        componentLabel: 'title',
+        formName: 'add-edit-form',
+        inputName: 'title'
+    }),
+    withHandlers({
+        onChange: props => event => handleChange(event, props)
+    })
+)(BaseTextInput);
 
-const TitleWithHandler = WithHandler(Title);
-
-export default TitleWithHandler;
+export default Title;

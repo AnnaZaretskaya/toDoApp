@@ -4,6 +4,10 @@ import List from './components/ListPanel/List';
 import Filters from './components/FilterPanel/Filters';
 import AddOrEditPanel from './components/AddEditPanel/AddOrEditPanel';
 
+
+
+
+
 export default class App extends Component {
     render() {
         return (
@@ -17,6 +21,32 @@ export default class App extends Component {
         );
     }
 }
+
+// const addProp = props => mapProps((props) => {
+//     return {
+//         myProps: props.myProps,
+//         additionalProp: 'Ololo'
+//     }
+// });
+//
+// function innerComponent(props) {
+//     return (
+//         <div>Some content and, maybe, couple props = {props.myProps} and {props.additionalProp}</div>
+//     )
+// }
+//
+// const App = compose(
+//     addProp
+// )(innerComponent);
+//
+// export default App;
+
+
+
+
+
+
+
 
 /*
 sample for console:
