@@ -1,6 +1,6 @@
-import {compose, setDisplayName, withHandlers, withProps} from "recompose";
 import BaseTextInput from "../../sharedComponents/BaseTextInput";
 import handleChange from "../../sharedComponents/commonOnChangeHandler";
+import {compose, setDisplayName, withHandlers, withProps} from "recompose";
 
 const Content = compose(
     setDisplayName('Content'),

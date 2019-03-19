@@ -11,6 +11,10 @@ class ToDoItem extends Component {
     };
 
     handleDeleteButtonClick() {
+        if (this.props.item.id === this.props.shownItemId) {
+            this.props.chooseItem();
+        }
+
         this.props.deleteItem(this.props.item.id);
     };
 

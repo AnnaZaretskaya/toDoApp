@@ -2,7 +2,7 @@ import _ from 'underscore';
 import Tags from './components/Tags';
 import { connect } from 'react-redux';
 import Title from './components/Title';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Priority from './components/Priority';
 import { actionsShared } from "../shared.actions";
 import Description from './components/Description';

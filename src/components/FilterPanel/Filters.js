@@ -1,6 +1,5 @@
 import Tags from "./components/Tags";
 import { connect } from 'react-redux';
-import '../../theme/filter.panel.css';
 import React, {Component} from 'react';
 import Content from './components/Content';
 import Priorities from './components/Priorities';

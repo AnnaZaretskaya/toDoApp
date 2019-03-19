@@ -1,12 +1,11 @@
-import React, {Component} from 'react';
-import ToDoItem from './components/toDoItem';
-import CompleteAllToggle from './components/CompleteAllToggle';
-import DeleteCompleted from './components/DeleteCompleted';
 import Left from './components/Left';
-import '../../theme/list.panel.css';
-import { actionsList } from './List.actions';
 import { connect } from 'react-redux';
+import React, { Component } from 'react';
+import ToDoItem from './components/toDoItem';
+import { actionsList } from './List.actions';
 import { actionsShared } from "../shared.actions";
+import DeleteCompleted from './components/DeleteCompleted';
+import CompleteAllToggle from './components/CompleteAllToggle';
 
 class List extends Component {
 
@@ -105,7 +104,8 @@ class List extends Component {
                         item={item}
                         doneToggle={actionsListExtended.doneToggle}
                         chooseItem={actionsListExtended.chooseShownItem}
-                        deleteItem={actionsListExtended.deleteItem}/>
+                        deleteItem={actionsListExtended.deleteItem}
+                        shownItemId={this.props.shownItemId}/>
                 );
             });
         }
@@ -129,7 +129,8 @@ class List extends Component {
 function mapStateToProps (data) {
     return {
         list: data.list,
-        filters: data.filters
+        filters: data.filters,
+        shownItemId: data.shownItem.id
     }
 }
 
