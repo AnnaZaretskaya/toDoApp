@@ -3,7 +3,7 @@ import { ToDoItem } from '../../components/toDoItem';
 import renderer from 'react-test-renderer';
 import { fakeItemMock } from "../mocks";
 
-describe.only('toDoItem', () => {
+describe('toDoItem', () => {
     let fakeItem = Object.assign({}, fakeItemMock);
     let fakeShownItemId = 1;
     let instance;

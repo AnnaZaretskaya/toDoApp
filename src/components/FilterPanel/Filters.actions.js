@@ -1,4 +1,4 @@
-import { store } from "../../store";
+import { store } from "../../storeUtils/store";
 import { ACTION_TYPE } from "../../storeUtils/actionsType";
 
 export const applyFilter = (change) => {

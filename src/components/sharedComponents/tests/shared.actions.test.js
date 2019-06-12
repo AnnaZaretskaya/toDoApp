@@ -1,6 +1,6 @@
 import {chooseShownItem} from '../shared.actions';
 import {fakeList} from './mocks';
-import { store } from '../../../store';
+import { store } from '../../../storeUtils/store';
 
 describe('shared.actions', () => {
 

@@ -1,16 +1,18 @@
 import React from 'react';
-import BaseCheckboxInput from '../BaseCheckboxInput';
+import BasePriorityInput from '../BasePriorityInput';
 import renderer from 'react-test-renderer';
 
-describe('BaseCheckboxInput', () => {
+describe('BasePriorityInput', () => {
 
     const component = () => {
         return renderer.create(
-            <BaseCheckboxInput
+            <BasePriorityInput
+                componentLabel={'fakeComponentLabel'}
+                formName={'fakeFormName'}
+                inputType={'checkbox'}
                 inputName={'fakeInputName'}
                 onChange={jest.fn()}
-                isChecked={'fakeIsChecked'}
-                componentLabel={'fakeComponentLabel'}
+                value={['1', '3']}
             />
         );
     };

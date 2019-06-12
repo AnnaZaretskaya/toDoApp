@@ -1,16 +1,17 @@
 import React from 'react';
-import BaseCheckboxInput from '../BaseCheckboxInput';
+import BaseTextInput from '../BaseTextInput';
 import renderer from 'react-test-renderer';
 
-describe('BaseCheckboxInput', () => {
+describe('BaseTextInput', () => {
 
     const component = () => {
         return renderer.create(
-            <BaseCheckboxInput
+            <BaseTextInput
+                componentLabel={'fakeComponentLabel'}
+                formName={'fakeFormName'}
                 inputName={'fakeInputName'}
                 onChange={jest.fn()}
-                isChecked={'fakeIsChecked'}
-                componentLabel={'fakeComponentLabel'}
+                value={'fakeValue'}
             />
         );
     };

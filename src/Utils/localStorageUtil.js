@@ -1,4 +1,4 @@
-import {ACTION_TYPE} from "../storeUtils/actionsType";
+import { ACTION_TYPE } from "../storeUtils/actionsType";
 
 export const localStorageSync = store => next => action => {
     const result = next(action);

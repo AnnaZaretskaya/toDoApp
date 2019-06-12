@@ -1,5 +1,5 @@
 import React from 'react';
-import { store } from './store';
+import { store } from './storeUtils/store';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
@@ -25,7 +25,7 @@ ReactDOM.render(
 прикрутить нотификацию
 проверить снапы
 
-потестить рутовый редюсер
+потестить рутовый редюсер?
 тесты
 локализацию ошибок прикрутить
 непротестированы хендлеры(подвязка к кликам)
