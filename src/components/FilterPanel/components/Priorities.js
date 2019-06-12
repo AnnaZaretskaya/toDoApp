@@ -1,7 +1,7 @@
 import BasePriorityInput from "../../sharedComponents/BasePriorityInput";
 import { compose, setDisplayName, withHandlers, withProps } from "recompose";
 
-function handleChange(event, props) {
+export function handleChange(event, props) {
     let change = [].concat(props.value);
 
     change.includes(event.currentTarget.value)

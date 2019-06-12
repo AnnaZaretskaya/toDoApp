@@ -1,16 +1,20 @@
 import _ from 'underscore';
 import Tags from './components/Tags';
-import { connect } from 'react-redux';
 import Title from './components/Title';
 import React, { Component } from 'react';
 import Priority from './components/Priority';
-import { actionsShared } from "../shared.actions";
 import Description from './components/Description';
 import ButtonSection from './components/ButtonSection';
 import initState from '../../storeUtils/initialStoreState';
+import { connect } from 'react-redux';
+import { actionsShared } from "../sharedComponents/shared.actions";
 import { actionsEditPanel } from './AddOrEditPanel.actions';
 
-class AddOrEditPanel extends Component {
+// exported for tests only
+export const actions = {...actionsShared, ...actionsEditPanel};
+
+// exported for tests only
+export class AddOrEditPanel extends Component {
 
     isFormValid() {
         return !!(this.props.shownItem.title && this.props.shownItem.description);
@@ -28,7 +32,7 @@ class AddOrEditPanel extends Component {
                 .filter((tag) => { return tag !== '' });
 
             this.reset();
-            actionsEditPanelExtended.createItem(newItem);
+            actions.createItem(newItem);
         } else {
             console.error('Title and Description are required');
         }
@@ -45,19 +49,19 @@ class AddOrEditPanel extends Component {
 
         this.reset();
 
-        actionsEditPanelExtended.updateItem(updatedItem);
+        actions.updateItem(updatedItem);
     }
 
     reset(event) {
         event && event.preventDefault();
 
-        actionsEditPanelExtended.chooseShownItem();
+        actions.chooseShownItem();
     }
 
     restore(event) {
         event && event.preventDefault();
 
-        actionsEditPanelExtended.chooseShownItem(this.props.shownItem.id);
+        actions.chooseShownItem(this.props.shownItem.id);
     }
 
     render() {
@@ -71,19 +75,19 @@ class AddOrEditPanel extends Component {
                 <form id="add-edit-form">
 
                     <Title
-                        onChange={actionsEditPanelExtended.shownItemChange}
+                        onChange={actions.shownItemChange}
                         value={this.props.shownItem.title}/>
 
                     <Description
-                        onChange={actionsEditPanelExtended.shownItemChange}
+                        onChange={actions.shownItemChange}
                         value={this.props.shownItem.description}/>
 
                     <Tags
-                        onChange={actionsEditPanelExtended.shownItemChange}
+                        onChange={actions.shownItemChange}
                         value={this.props.shownItem.tags}/>
 
                     <Priority
-                        onChange={actionsEditPanelExtended.shownItemChange}
+                        onChange={actions.shownItemChange}
                         value={[this.props.shownItem.priority]}/>
 
                     <ButtonSection
@@ -101,7 +105,8 @@ class AddOrEditPanel extends Component {
     }
 }
 
-function mapStateToProps(data) {
+// exported for tests only
+export function mapStateToProps(data) {
     let editedItem;
 
     if (data.shownItem.id) {
@@ -117,6 +122,4 @@ function mapStateToProps(data) {
     }
 }
 
-let actionsEditPanelExtended = {...actionsShared, ...actionsEditPanel};
-
-export default connect(mapStateToProps, actionsEditPanelExtended)(AddOrEditPanel);
+export default connect(mapStateToProps)(AddOrEditPanel);

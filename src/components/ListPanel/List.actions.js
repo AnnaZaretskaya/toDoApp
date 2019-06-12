@@ -1,7 +1,7 @@
-import { store } from "../../index";
+import { store } from "../../store";
 import { ACTION_TYPE } from "../../storeUtils/actionsType";
 
-const doneToggle = (id) => {
+export const doneToggle = (id) => {
     return {
         type: ACTION_TYPE.LIST_EDIT,
         name: ACTION_TYPE.DONE_TOGGLE,
@@ -9,15 +9,15 @@ const doneToggle = (id) => {
     }
 };
 
-const markAllDone = (shouldBeCompleted) => {
+export const markAllDone = (shouldBeCompleted) => {
     return {
         type: ACTION_TYPE.LIST_EDIT,
         name: ACTION_TYPE.MARK_ALL_DONE,
-        shouldBeCompleted: shouldBeCompleted
+        shouldBeCompleted: !!shouldBeCompleted
     }
 };
 
-const deleteItem = (id) => {
+export const deleteItem = (id) => {
     return {
         type: ACTION_TYPE.LIST_EDIT,
         name: ACTION_TYPE.DELETE_ITEM,

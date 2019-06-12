@@ -1,14 +1,17 @@
 import Left from './components/Left';
-import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import ToDoItem from './components/toDoItem';
-import { actionsList } from './List.actions';
-import { actionsShared } from "../shared.actions";
 import DeleteCompleted from './components/DeleteCompleted';
 import CompleteAllToggle from './components/CompleteAllToggle';
+import { connect } from 'react-redux';
+import { actionsList } from './List.actions';
+import { actionsShared } from "../sharedComponents/shared.actions";
 
-class List extends Component {
+export let actions = {...actionsShared, ...actionsList};
 
+export class List extends Component {
+
+    // dreadful style
     applyFilters() {
         let filteredList = [].concat(this.props.list);
         let filters = Object.assign({}, this.props.filters);
@@ -28,6 +31,7 @@ class List extends Component {
                     return item.isDone === false;
                 });
             }
+
             return list;
         },
 
@@ -35,6 +39,7 @@ class List extends Component {
             list = list.filter((item) => {
                 return (item.title.includes(filters.content) || item.description.includes(filters.content))
             });
+
             return list;
         },
 
@@ -44,6 +49,7 @@ class List extends Component {
                     return filters.priorities.includes(item.priority)
                 });
             }
+
             return list;
         },
 
@@ -55,6 +61,7 @@ class List extends Component {
                     });
                 });
             }
+
             return list;
         }
 
@@ -72,8 +79,8 @@ class List extends Component {
 
     onDoneAllToggle() {
         this.areAllItemsCompleted()
-            ? actionsListExtended.markAllDone(false)
-            : actionsListExtended.markAllDone(true);
+            ? actions.markAllDone(false)
+            : actions.markAllDone(true);
     }
 
     getNumberCompleted() {
@@ -88,7 +95,7 @@ class List extends Component {
                 return item.isDone === true
                 })
             .forEach((item) => {
-                actionsListExtended.deleteItem(item.id);
+                actions.deleteItem(item.id);
                 });
     }
 
@@ -98,13 +105,14 @@ class List extends Component {
 
         if (list.length) {
             toDoList = list.map(item => {
+
                 return (
                     <ToDoItem
                         key={item.id}
                         item={item}
-                        doneToggle={actionsListExtended.doneToggle}
-                        chooseItem={actionsListExtended.chooseShownItem}
-                        deleteItem={actionsListExtended.deleteItem}
+                        doneToggle={actions.doneToggle}
+                        chooseItem={actions.chooseShownItem}
+                        deleteItem={actions.deleteItem}
                         shownItemId={this.props.shownItemId}/>
                 );
             });
@@ -126,7 +134,7 @@ class List extends Component {
     }
 }
 
-function mapStateToProps (data) {
+export function mapStateToProps(data) {
     return {
         list: data.list,
         filters: data.filters,
@@ -134,6 +142,4 @@ function mapStateToProps (data) {
     }
 }
 
-let actionsListExtended = {...actionsShared, ...actionsList};
-
-export default connect(mapStateToProps, actionsListExtended)(List);
+export default connect(mapStateToProps)(List);

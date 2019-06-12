@@ -1,6 +1,6 @@
-import { ACTION_TYPE } from './actionsType';
+import { ACTION_TYPE } from '../actionsType';
 
-export function shownItem(shownItem = {}, action) {
+export function shownItem(shownItem = {}, action = {}) {
     if (action.type === ACTION_TYPE.SHOWN_ITEM_EDIT) {
         switch (action.name) {
             case ACTION_TYPE.SHOWN_ITEM_CHANGE:

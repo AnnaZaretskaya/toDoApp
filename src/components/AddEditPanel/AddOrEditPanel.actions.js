@@ -1,7 +1,7 @@
-import { store } from "../../index";
+import { store } from "../../store";
 import { ACTION_TYPE } from "../../storeUtils/actionsType";
 
-const shownItemChange = (change) => {
+export const shownItemChange = (change) => {
     return {
         type: ACTION_TYPE.SHOWN_ITEM_EDIT,
         name: ACTION_TYPE.SHOWN_ITEM_CHANGE,
@@ -9,7 +9,7 @@ const shownItemChange = (change) => {
     }
 };
 
-const createItem = (item) => {
+export const createItem = (item) => {
     return {
         type: ACTION_TYPE.LIST_EDIT,
         name: ACTION_TYPE.ADD_ITEM,
@@ -17,7 +17,7 @@ const createItem = (item) => {
     }
 };
 
-const updateItem = (item) => {
+export const updateItem = (item) => {
     return {
         type: ACTION_TYPE.LIST_EDIT,
         name: ACTION_TYPE.UPDATE_ITEM,

@@ -1,6 +1,6 @@
-import { ACTION_TYPE } from './actionsType';
+import { ACTION_TYPE } from '../actionsType';
 
-export function list(list = [], action) {
+export function list(list = [], action = {}) {
     if (action.type === ACTION_TYPE.LIST_EDIT) {
         switch (action.name) {
             case ACTION_TYPE.UPDATE_ITEM:

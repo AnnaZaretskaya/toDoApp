@@ -1,6 +1,6 @@
-import { list } from './reducer.list';
-import { filters } from './reducer.filters';
-import { shownItem } from './reducer.shownItem';
+import { list } from './reducers/reducer.list';
+import { filters } from './reducers/reducer.filters';
+import { shownItem } from './reducers/reducer.addEdit';
 
 import { combineReducers } from 'redux';
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class Tags extends Component {
+export class Tags extends Component {
 
     handleTagsFilter(event) {
         let change = [].concat(this.props.selectedTags);

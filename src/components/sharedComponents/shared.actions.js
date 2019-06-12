@@ -1,7 +1,7 @@
-import { store } from "../index";
-import { ACTION_TYPE } from "../storeUtils/actionsType";
+import { store } from "../../store";
+import { ACTION_TYPE } from "../../storeUtils/actionsType";
 
-const chooseShownItem = (id) => {
+export const chooseShownItem = (id) => {
     if (!id) {
         return {
             type: ACTION_TYPE.SHOWN_ITEM_EDIT,

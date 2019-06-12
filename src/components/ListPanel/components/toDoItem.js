@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class ToDoItem extends Component {
+export class ToDoItem extends Component {
 
     handleTitleClick() {
         this.props.doneToggle(this.props.item.id);

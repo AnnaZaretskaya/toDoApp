@@ -35,7 +35,6 @@ let toDoList = [{
     isDone: false
 }];
 
-
 let initState = {
     filters: {
         showUnDone: false,

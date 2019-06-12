@@ -1,7 +1,7 @@
-import { store } from "../../index";
+import { store } from "../../store";
 import { ACTION_TYPE } from "../../storeUtils/actionsType";
 
-const applyFilter = (change) => {
+export const applyFilter = (change) => {
     return {
         type: ACTION_TYPE.FILTER,
         change: change

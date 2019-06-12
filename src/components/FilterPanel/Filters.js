@@ -1,31 +1,33 @@
 import Tags from "./components/Tags";
-import { connect } from 'react-redux';
 import React, {Component} from 'react';
 import Content from './components/Content';
 import Priorities from './components/Priorities';
-import { actionsFilters } from './Filters.actions';
 import ShowUnDoneItems from "./components/ShowUnDoneItems";
+import { connect } from 'react-redux';
+import { actionsFilters } from './Filters.actions';
 
-class Filters extends Component {
+let actions = {...actionsFilters};
+
+export class Filters extends Component {
     render() {
         return (
             <aside className="left-aside filters-container">
-                <form id="filter-form">
+                <form>
 
                     <ShowUnDoneItems
                             value={this.props.filters.showUnDone}
-                            onChange={actionsFilters.applyFilter}/>
+                            onChange={actions.applyFilter}/>
 
                     <Content
                             value={this.props.filters.content}
-                            onChange={actionsFilters.applyFilter}/>
+                            onChange={actions.applyFilter}/>
 
                     <Priorities
                             value={this.props.filters.priorities}
-                            onChange={actionsFilters.applyFilter}/>
+                            onChange={actions.applyFilter}/>
 
                     <Tags
-                            onChange={actionsFilters.applyFilter}
+                            onChange={actions.applyFilter}
                             tags={this.props.uniqueTagList}
                             selectedTags={this.props.filters.selectedTags}/>
 
@@ -35,7 +37,7 @@ class Filters extends Component {
     }
 }
 
-function mapStateToProps (data) {
+export function mapStateToProps (data) {
     function makeTagList(list) {
         let allTags = [];
         let uniqueTagList = [];
@@ -59,4 +61,4 @@ function mapStateToProps (data) {
     }
 }
 
-export default connect(mapStateToProps, { actionsFilters })(Filters);
+export default connect(mapStateToProps)(Filters);
