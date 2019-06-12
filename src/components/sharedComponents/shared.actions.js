@@ -10,7 +10,7 @@ export const chooseShownItem = (id) => {
                 id: null,
                 title: '',
                 description: '',
-                priority: 2,
+                priority: '2',
                 tags: ''
             }
         }

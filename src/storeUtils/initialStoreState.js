@@ -46,7 +46,7 @@ let initState = {
         id: null,
         title: '',
         description: '',
-        priority: 2,
+        priority: '2',
         tags: ''
     },
     list: JSON.parse(localStorage.getItem('toDoList')) || toDoList

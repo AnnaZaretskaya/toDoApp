@@ -4,7 +4,7 @@ export const fakeShownItemFull = {
     id: 1100,
     title: 'fakeTitle2',
     description: 'fakeDescription2',
-    priority: 1,
+    priority: '1',
     tags: 'fakeTag5, fakeTag6,,,,   ,  , fakeTag7, fakeTag8',
 };
 
@@ -31,7 +31,7 @@ export const reducerAddEditOutcome = {
         id: 1100,
         title: 'extendedTitle',
         description: 'fakeDescription2',
-        priority: 1,
+        priority: '1',
         tags: 'fakeTag5, fakeTag6,,,,   ,  , fakeTag7, fakeTag8'
     },
     result2: { id: 'choosenItem' }
@@ -47,13 +47,13 @@ export const fakeFilter = {
 
 export const fakeFiltersActions = {
     type: 'FILTER',
-    change: { priorities: [2] }
+    change: { priorities: ['2'] }
 };
 
 export const reducerFiltersOutcome = {
     showUnDone: false,
     content: 'fake content',
-    priorities: [2],
+    priorities: ['2'],
     selectedTags: []
 };
 
