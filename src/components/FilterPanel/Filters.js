@@ -4,6 +4,7 @@ import Content from './components/Content';
 import Priorities from './components/Priorities';
 import ShowUnDoneItems from "./components/ShowUnDoneItems";
 import { connect } from 'react-redux';
+import { compose, lifecycle } from "recompose";
 import { actionsFilters } from './Filters.actions';
 
 let actions = {...actionsFilters};
@@ -61,4 +62,13 @@ export function mapStateToProps (data) {
     }
 }
 
-export default connect(mapStateToProps)(Filters);
+const enhance = compose(
+    connect(mapStateToProps),
+    lifecycle({
+        componentDidCatch(error) {
+            console.log('Oops, error!', error);
+        }
+    })
+);
+
+export default enhance(Filters);

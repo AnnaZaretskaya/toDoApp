@@ -1,5 +1,5 @@
 import { list } from '../reducers/reducer.list'
-import { fakeList, fakeListActions, reducerListOutcome } from './mock'
+import { fakeList, fakeListActions, reducerListOutcome } from './mocks'
 
 describe('reducer.list', () => {
 

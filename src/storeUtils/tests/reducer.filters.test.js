@@ -1,5 +1,5 @@
 import { filters } from '../reducers/reducer.filters'
-import { fakeFilter, fakeFiltersActions, reducerFiltersOutcome } from './mock'
+import { fakeFilter, fakeFiltersActions, reducerFiltersOutcome } from './mocks'
 
 describe('reducer.filters', () => {
     it('should return the initial state {}', () => {

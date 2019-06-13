@@ -7,8 +7,9 @@ import Description from './components/Description';
 import ButtonSection from './components/ButtonSection';
 import initState from '../../storeUtils/initialStoreState';
 import { connect } from 'react-redux';
-import { actionsShared } from "../sharedComponents/shared.actions";
+import { compose, lifecycle } from "recompose";
 import { actionsEditPanel } from './AddOrEditPanel.actions';
+import { actionsShared } from "../sharedComponents/shared.actions";
 
 // exported for tests only
 export const actions = {...actionsShared, ...actionsEditPanel};
@@ -122,4 +123,13 @@ export function mapStateToProps(data) {
     }
 }
 
-export default connect(mapStateToProps)(AddOrEditPanel);
+const enhance = compose(
+    connect(mapStateToProps),
+    lifecycle({
+        componentDidCatch(error) {
+            console.log('Oops, error!', error);
+        }
+    })
+);
+
+export default enhance(AddOrEditPanel);

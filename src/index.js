@@ -19,18 +19,6 @@ ReactDOM.render(
 );
 // I cant create store in this file because it is prohibited to export some variable and render to DOM
 // in same file by jest testing functionality.
-/*
-
-привести в порядок моки, убрать неиспользуемые константы
-прикрутить нотификацию
-проверить снапы
-
-потестить рутовый редюсер?
-тесты
-локализацию ошибок прикрутить
-непротестированы хендлеры(подвязка к кликам)
- */
-
 
 // describe('', () => {
 //     it('', () => {
@@ -76,5 +64,4 @@ var toDoList = [{
     isDone: false
 }];
 localStorage.setItem('toDoList', JSON.stringify(toDoList));
-
-* */
+*/

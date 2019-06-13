@@ -5,6 +5,7 @@ import DeleteCompleted from './components/DeleteCompleted';
 import CompleteAllToggle from './components/CompleteAllToggle';
 import { connect } from 'react-redux';
 import { actionsList } from './List.actions';
+import { compose, lifecycle } from "recompose";
 import { actionsShared } from "../sharedComponents/shared.actions";
 
 export let actions = {...actionsShared, ...actionsList};
@@ -142,4 +143,13 @@ export function mapStateToProps(data) {
     }
 }
 
-export default connect(mapStateToProps)(List);
+const enhance = compose(
+    connect(mapStateToProps),
+    lifecycle({
+        componentDidCatch(error) {
+            console.log('Oops, error!', error);
+        }
+    })
+);
+
+export default enhance(List);

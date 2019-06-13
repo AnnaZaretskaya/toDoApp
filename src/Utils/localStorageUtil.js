@@ -8,3 +8,8 @@ export const localStorageSync = store => next => action => {
     }
     return result;
 };
+/*
+для тех кто я:
+типа вот так:
+localStorageSync(store)(next)(action)
+*/
