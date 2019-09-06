@@ -1,8 +1,10 @@
-import { applyFilter } from '../Filters.actions';
-import { mockActionFilterIncome, mockActionAddEditPanelOutcome } from './mocks';
+import { filterChange } from '../Filters.actions';
 
 describe('Filters.actions', () => {
     it('should return proper outcome for applyFilter action', () => {
-        expect(applyFilter(mockActionFilterIncome.fakeChange)).toEqual(mockActionAddEditPanelOutcome.result1);
+        expect(filterChange('fakeChange')).toEqual({
+            type: 'FILTER',
+            change: 'fakeChange'
+        });
     });
 });

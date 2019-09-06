@@ -3,7 +3,6 @@ import DeleteCompleted from '../../components/DeleteCompleted';
 import renderer from 'react-test-renderer';
 
 describe('DeleteCompleted', () => {
-
     const component = () => {
         return renderer.create(
             <DeleteCompleted

@@ -1,4 +1,4 @@
-import { filters } from '../reducers/reducer.filters'
+import { filters } from '../reducer.filters'
 import { fakeFilter, fakeFiltersActions, reducerFiltersOutcome } from './mocks'
 
 describe('reducer.filters', () => {

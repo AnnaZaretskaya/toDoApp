@@ -10,7 +10,7 @@ import './theme/add.edit.panel.css';
 
 import App from './App';
 
-window.store = store;
+window.store = () => store.getState();
 
 ReactDOM.render(
     <Provider store={store}>

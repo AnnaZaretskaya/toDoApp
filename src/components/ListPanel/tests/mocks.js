@@ -1,20 +1,30 @@
-
 /*ListPanel.actions section*/
 export const mockActionListOutcome = {
     result1: {
-        type: 'LIST_EDIT',
-        name: 'doneToggle',
+        type: 'DONE_TOGGLE',
+        shouldBeSavedToStorage: true,
         id: 1111
     },
     result2: {
-        type: 'LIST_EDIT',
-        name: 'markAllDone',
+        type: 'MARK_ALL_DONE',
+        shouldBeSavedToStorage: true,
         shouldBeCompleted: true
     },
     result3: {
-        type: 'LIST_EDIT',
-        name: 'deleteItem',
+        type: 'DELETE_ITEM',
+        shouldBeSavedToStorage: true,
         id: 9090909
+    },
+    result4: {
+        type: 'SHOWN_ITEM_CHOOSE',
+        item: {
+            id: 1000,
+            title: 'fakeTitle1',
+            description: 'fakeDescription1',
+            priority: '2',
+            tags: 'fakeTag1, fakeTag2, fakeTag3, fakeTag4',
+            isDone: false
+        }
     }
 };
 

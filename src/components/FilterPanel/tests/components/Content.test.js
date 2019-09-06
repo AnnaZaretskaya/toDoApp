@@ -1,26 +1,11 @@
-import React from 'react';
-import Content from '../../components/Content';
-import renderer from 'react-test-renderer';
+import { contentFilterChange } from "../../components/Content";
+import { actions } from "../../Filters.actions";
 
+describe('contentFilterChange', () => {
+    it('should call actions.filterChange with arguments from event', () => {
+        actions.filterChange = jest.fn();
+        contentFilterChange({ currentTarget: { value: 'value' }});
 
-describe('Content', () => {
-    let valueFake;
-    let onChangeFake= jest.fn();
-
-    const component = () => {
-            return renderer.create(
-                <Content
-                    onChange={onChangeFake}
-                    value={valueFake}
-                />
-            );
-        };
-
-    const renderComponent = () => component().toJSON();
-
-    it('should be rendered correctly', () => {
-        valueFake = 'fakeValue';
-
-        expect(renderComponent()).toMatchSnapshot();
+        expect(actions.filterChange).toBeCalledWith({ content: 'value'  });
     });
 });

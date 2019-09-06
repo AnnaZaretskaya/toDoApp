@@ -1,15 +1,13 @@
-import { ACTION_TYPE } from '../actionsType';
-
 export function shownItem(shownItem = {}, action = {}) {
-    if (action.type === ACTION_TYPE.SHOWN_ITEM_EDIT) {
-        switch (action.name) {
-            case ACTION_TYPE.SHOWN_ITEM_CHANGE:
-                return Object.assign({}, shownItem, action.change);
-            case ACTION_TYPE.SHOWN_ITEM_CHOOSE:
-                return Object.assign({}, action.item);
-            default:
-                return shownItem
-        }
+    switch (action.type) {
+        case 'SHOWN_ITEM_CHANGE':
+
+            return {...shownItem, ...action.change};
+        case 'SHOWN_ITEM_CHOOSE':
+
+            return {...action.item};
+        default:
+
+            return shownItem
     }
-    return shownItem
 }

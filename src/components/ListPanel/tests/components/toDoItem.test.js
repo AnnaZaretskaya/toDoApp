@@ -4,7 +4,7 @@ import renderer from 'react-test-renderer';
 import { fakeItemMock } from "../mocks";
 
 describe('toDoItem', () => {
-    let fakeItem = Object.assign({}, fakeItemMock);
+    let fakeItem = {...fakeItemMock};
     let fakeShownItemId = 1;
     let instance;
     let fakeDoneToggle = jest.fn();

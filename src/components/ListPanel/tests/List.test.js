@@ -1,11 +1,13 @@
 import React from 'react';
-import { List, mapStateToProps, actions } from '../List';
+import { actions } from '../List.actions';
 import renderer from 'react-test-renderer';
-import { fakeListMocks, fakeFiltersMock1, fakeFiltersMock2, fakeListFiltersResult, storeState } from "./mocks";
+import { applyFilters } from '../List.util';
+import { List, mapStateToProps } from '../List';
+import { fakeListMocks, fakeFiltersMock1, fakeFiltersMock2, storeState } from "./mocks";
 
 describe('List', () => {
     let fakeList;
-    let fakeFilters = Object.assign({}, fakeFiltersMock1);
+    let fakeFilters = {...fakeFiltersMock1};
     let instance;
 
     const component = () => {
@@ -23,73 +25,22 @@ describe('List', () => {
 
     describe('should be rendered correctly', () => {
         it('if content is not empty', () => {
-            fakeList = [].concat(fakeListMocks.mock1);
+            fakeList = [...fakeListMocks.mock1];
 
             expect(renderComponent()).toMatchSnapshot();
         });
 
         it('if selectedTags is not empty', () => {
             fakeList = [];
-            fakeFilters = Object.assign({}, fakeFiltersMock2);
+            fakeFilters = {...fakeFiltersMock2};
 
             expect(renderComponent()).toMatchSnapshot();
         });
     });
 
-    describe('applyFilters', () => {
-        it('should call filters in definite order', () => {
-            let callStack = [];
-            fakeList = [].concat(fakeListMocks.mock1);
-
-            instance = renderComponentInstance();
-
-            instance.filtersContainer = {
-                applyShowUnDone: jest.fn(() => {
-                    callStack.push(1)
-                }),
-                applyContentFilter: jest.fn(() => {
-                    callStack.push(2)
-                }),
-                applyPrioritiesFilter: jest.fn(() => {
-                    callStack.push(3)
-                }),
-                applyTagsFilter: jest.fn(() => {
-                    callStack.push(4)
-                })
-            };
-
-            instance.applyFilters();
-
-            expect(callStack).toEqual([1, 2, 3, 4]);
-
-        });
-    });
-
-    describe('filtersContainer', () => {
-        beforeAll(() => {
-            instance = renderComponentInstance();
-        });
-
-        it('applyShowUnDone', () => {
-            expect(instance.filtersContainer.applyShowUnDone(fakeList, {showUnDone: true})).toEqual(fakeListFiltersResult.mock1);
-        });
-
-        it('applyContentFilter', () => {
-            expect(instance.filtersContainer.applyContentFilter(fakeList, {content: 'fakeDescription5'})).toEqual(fakeListFiltersResult.mock2);
-        });
-
-        it('applyPrioritiesFilter', () => {
-            expect(instance.filtersContainer.applyPrioritiesFilter(fakeList, {priorities: ['2']})).toEqual(fakeListFiltersResult.mock3);
-        });
-
-        it('applyTagsFilter', () => {
-            expect(instance.filtersContainer.applyTagsFilter(fakeList, {selectedTags: ['fakeTag']})).toEqual(fakeListFiltersResult.mock4);
-        });
-    });
-
     describe('areAllItemsCompleted', () => {
         it('should return false if there is not finished items in list', () => {
-            fakeList = [].concat(fakeListMocks.mock1);
+            fakeList = [...fakeListMocks.mock1];
 
             instance = renderComponentInstance();
 
@@ -98,7 +49,7 @@ describe('List', () => {
         });
 
         it('should return true if all items in list are finished', () => {
-            fakeList = [].concat(fakeListMocks.mock2);
+            fakeList = [...fakeListMocks.mock2];
 
             instance = renderComponentInstance();
 
@@ -142,7 +93,7 @@ describe('List', () => {
 
     describe('getNumberCompleted', () => {
         it('should return proper number of completed items', () => {
-            fakeList = [].concat(fakeListMocks.mock1);
+            fakeList = [...fakeListMocks.mock1];
 
             instance = renderComponentInstance();
 
@@ -161,7 +112,7 @@ describe('List', () => {
     describe('onDeleteAllDone', () => {
         it('should call deleteItem for each noncompleted item with id', () => {
             actions.deleteItem = jest.fn();
-            fakeList = [].concat(fakeListMocks.mock1);
+            fakeList = [...fakeListMocks.mock1];
 
             instance = renderComponentInstance();
 
@@ -169,6 +120,23 @@ describe('List', () => {
 
             expect(actions.deleteItem).toBeCalledWith(1010);
             expect(actions.deleteItem).toBeCalledTimes(1);
+        });
+    });
+
+    describe('getDerivedStateFromProps', () => {
+        it('should return proper object', () => {
+            let props = { list: [...fakeListMocks.mock1], filters: {...fakeFiltersMock1} };
+
+            expect(List.getDerivedStateFromProps(props)).toEqual({
+                list: [{
+                    id: 2000,
+                    title: 'fakeTitle5',
+                    description: 'fakeDescription5',
+                    priority: '2',
+                    tags: ['fakeTag17', 'fakeTag', 'fakeTag19', 'fakeTag20'],
+                    isDone: false
+                }]
+            });
         });
     });
 });

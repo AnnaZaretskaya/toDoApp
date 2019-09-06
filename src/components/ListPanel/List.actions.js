@@ -1,32 +1,51 @@
 import { store } from "../../storeUtils/store";
-import { ACTION_TYPE } from "../../storeUtils/actionsType";
+import { shownItem } from "../../storeUtils/initialStoreState";
 
 export const doneToggle = (id) => {
     return {
-        type: ACTION_TYPE.LIST_EDIT,
-        name: ACTION_TYPE.DONE_TOGGLE,
+        type: 'DONE_TOGGLE',
+        shouldBeSavedToStorage: true,
         id: id
     }
 };
 
 export const markAllDone = (shouldBeCompleted) => {
     return {
-        type: ACTION_TYPE.LIST_EDIT,
-        name: ACTION_TYPE.MARK_ALL_DONE,
+        type: 'MARK_ALL_DONE',
+        shouldBeSavedToStorage: true,
         shouldBeCompleted: !!shouldBeCompleted
     }
 };
 
 export const deleteItem = (id) => {
     return {
-        type: ACTION_TYPE.LIST_EDIT,
-        name: ACTION_TYPE.DELETE_ITEM,
+        type: 'DELETE_ITEM',
+        shouldBeSavedToStorage: true,
         id: id
     }
 };
 
-export const actionsList = {
+export const chooseShownItem = (id) => {
+    if (!id) {
+        return {
+            type: 'SHOWN_ITEM_CHOOSE',
+            item: shownItem
+        };
+    }
+
+    let item = {...store.getState().list.find(item => { return item.id === id })};
+
+    item.tags = item.tags.join(', ');
+
+    return {
+        type: 'SHOWN_ITEM_CHOOSE',
+        item: item
+    }
+};
+
+export const actions = {
     doneToggle: id => store.dispatch(doneToggle(id)),
     markAllDone: (shouldBeCompleted) => store.dispatch(markAllDone(shouldBeCompleted)),
     deleteItem: id => store.dispatch(deleteItem(id)),
+    chooseShownItem: (id) => {store.dispatch(chooseShownItem(id))}
 };

@@ -35,7 +35,7 @@ let toDoList = [{
     isDone: false
 }];
 
-let initState = {
+export const initState = {
     filters: {
         showUnDone: false,
         content: '',
@@ -52,4 +52,10 @@ let initState = {
     list: JSON.parse(localStorage.getItem('toDoList')) || toDoList
 };
 
-export default initState;
+export const shownItem = {
+    id: null,
+    title: '',
+    description: '',
+    priority: '2',
+    tags: ''
+};

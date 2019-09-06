@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 export class ToDoItem extends Component {
 
@@ -26,17 +26,17 @@ export class ToDoItem extends Component {
                  data-priority={this.props.item.priority}
                  data-isdone={this.props.item.isDone}>
                 <h4 className="task-title"
-                    onClick={this.handleTitleClick.bind(this)}>
+                    onClick={() => this.handleTitleClick()}>
                     {this.props.item.title}
                 </h4>
                 <p className="task-description">{this.props.item.description}</p>
                 <p className="task-tags">{this.props.item.tags.join(', ')}</p>
                 <button className="edit"
-                      onClick={this.handleEditButtonClick.bind(this)}>
+                      onClick={() => this.handleEditButtonClick()}>
                         Edit
                 </button>
                 <button className="remove"
-                        onClick={this.handleDeleteButtonClick.bind(this)}>Remove
+                        onClick={() => this.handleDeleteButtonClick()}>Remove
                 </button>
             </div>
         );

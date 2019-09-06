@@ -10,16 +10,14 @@ export const fakeShownItemFull = {
 
 export const fakeAddEditActions = {
     mock1: {
-        type: 'SHOWN_ITEM_EDIT',
-        name: 'shownItemChange',
+        type: 'SHOWN_ITEM_CHANGE',
         change: {
             title: 'extendedTitle'
         }
     },
     mock2: {
-        type: 'SHOWN_ITEM_EDIT',
-        name: 'shownItemChoose',
-        item: { id: 'choosenItem' }
+        type: 'SHOWN_ITEM_CHOOSE',
+        item: { id: 'chosenItem' }
     },
     mock3: {
         type: 'not valid'
@@ -34,7 +32,7 @@ export const reducerAddEditOutcome = {
         priority: '1',
         tags: 'fakeTag5, fakeTag6,,,,   ,  , fakeTag7, fakeTag8'
     },
-    result2: { id: 'choosenItem' }
+    result2: { id: 'chosenItem' }
 };
 
 /*filters section*/
@@ -95,16 +93,11 @@ const fakeListInit = [{
     isDone: false
 }];
 
-export const fakeList = [].concat(fakeListInit);
+export const fakeList = [...fakeListInit];
 
 export const fakeListActions = {
-    mock1: {
-        type: 'LIST_EDIT',
-        name: 'updateItem',
-    },
     mock2: {
-        type: 'LIST_EDIT',
-        name: 'updateItem',
+        type: 'UPDATE_ITEM',
         item: {
             id: 2000,
             title: 'fakeTitle5 updated',
@@ -115,13 +108,11 @@ export const fakeListActions = {
         }
     },
     mock3: {
-        type: 'LIST_EDIT',
-        name: 'deleteItem',
+        type: 'DELETE_ITEM',
         id: 2000
     },
     mock4: {
-        type: 'LIST_EDIT',
-        name: 'addItem',
+        type: 'ADD_ITEM',
         item: {
             id: 2001,
             title: 'fakeTitle5 new',
@@ -132,24 +123,20 @@ export const fakeListActions = {
         }
     },
     mock5: {
-        type: 'LIST_EDIT',
-        name: 'doneToggle',
+        type: 'DONE_TOGGLE',
         id: 2000
     },
     mock6: {
-        type: 'LIST_EDIT',
-        name: 'markAllDone',
+        type: 'MARK_ALL_DONE',
         shouldBeCompleted: true
     },
     mock7: {
-        type: 'LIST_EDIT',
-        name: 'markAllDone',
+        type: 'MARK_ALL_DONE',
         shouldBeCompleted: false
     }
 };
 
 export const reducerListOutcome = {
-    result1: [].concat(fakeListInit),
     result2: [{
         id: 1000,
         title: 'fakeTitle1',
@@ -215,14 +202,14 @@ export const reducerListOutcome = {
         tags: ['fakeTag13', 'fakeTag14', 'fakeTag15', 'fakeTag16'],
         isDone: false
     }],
-    result4: [].concat(fakeListInit, {
+    result4: [...fakeListInit, {
         id: 2001,
         title: 'fakeTitle5 new',
         description: 'fakeDescription5 new',
         priority: '2',
         tags: ['fakeTag17 new', 'fakeTag18 new', 'fakeTag19 new', 'fakeTag20 new'],
         isDone: false
-    }),
+    }],
     result5: [{
         id: 1000,
         title: 'fakeTitle1',

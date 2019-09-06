@@ -20,14 +20,14 @@ describe('localStorageSync', () => {
     });
 
     it('should set list if list was edited and return result of `next` call', () => {
-        action = { type: 'LIST_EDIT' };
+        action = { shouldBeSavedToStorage: true };
 
         expect(localStorageSync(store)(next)(action)).toEqual(action);
         expect(localStorage.setItem).toBeCalledWith('toDoList', "[1,2,3]");
     });
 
     it('should not set list if list was not edited', () => {
-        action = { type: 'not LIST_EDIT' };
+        action = { shouldBeSavedToStorage: undefined };
 
         localStorageSync(store)(next)(action);
 

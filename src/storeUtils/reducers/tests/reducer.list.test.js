@@ -1,4 +1,4 @@
-import { list } from '../reducers/reducer.list'
+import { list } from '../reducer.list'
 import { fakeList, fakeListActions, reducerListOutcome } from './mocks'
 
 describe('reducer.list', () => {
@@ -9,10 +9,6 @@ describe('reducer.list', () => {
 
     it('should return the initial state []', () => {
         expect(list(undefined, {type: null})).toEqual([]);
-    });
-
-    it('should return initial list if action hasnt item', () => {
-        expect(list(fakeList, fakeListActions.mock1)).toEqual(reducerListOutcome.result1);
     });
 
     it('should return list with updated item for updating action', () => {

@@ -1,32 +1,50 @@
 import { store } from "../../storeUtils/store";
-import { ACTION_TYPE } from "../../storeUtils/actionsType";
+import { shownItem } from "../../storeUtils/initialStoreState";
 
 export const shownItemChange = (change) => {
     return {
-        type: ACTION_TYPE.SHOWN_ITEM_EDIT,
-        name: ACTION_TYPE.SHOWN_ITEM_CHANGE,
+        type: 'SHOWN_ITEM_CHANGE',
         change: change
     }
 };
 
 export const createItem = (item) => {
     return {
-        type: ACTION_TYPE.LIST_EDIT,
-        name: ACTION_TYPE.ADD_ITEM,
+        type: 'ADD_ITEM',
+        shouldBeSavedToStorage: true,
         item: item
     }
 };
 
 export const updateItem = (item) => {
     return {
-        type: ACTION_TYPE.LIST_EDIT,
-        name: ACTION_TYPE.UPDATE_ITEM,
+        type: 'UPDATE_ITEM',
+        shouldBeSavedToStorage: true,
         item : item
     }
 };
 
-export const actionsEditPanel = {
+export const chooseShownItem = (id) => {
+    if (!id) {
+        return {
+            type: 'SHOWN_ITEM_CHOOSE',
+            item: shownItem
+        };
+    }
+
+    let item = {...store.getState().list.find(item => { return item.id === id })};
+
+    item.tags = item.tags.join(', ');
+
+    return {
+        type: 'SHOWN_ITEM_CHOOSE',
+        item: item
+    }
+};
+
+export const actions = {
     shownItemChange: change => store.dispatch(shownItemChange(change)),
     createItem: item => store.dispatch(createItem(item)),
     updateItem: item => store.dispatch(updateItem(item)),
+    chooseShownItem: (id) => store.dispatch(chooseShownItem(id))
 };

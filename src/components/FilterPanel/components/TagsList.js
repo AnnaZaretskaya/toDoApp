@@ -1,15 +1,19 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { actions } from '../Filters.actions';
+import { connect } from 'react-redux';
+import { compose, lifecycle } from "recompose";
+import { makeUniqueTagList } from '../Filters.util';
 
-export class Tags extends Component {
+export class TagsList extends Component {
 
     handleTagsFilter(event) {
-        let change = [].concat(this.props.selectedTags);
+        let change = [...this.props.selectedTags];
 
         change.includes(event.target.innerText)
             ? change.splice(change.indexOf(event.target.innerText), 1)
             : change = change.concat([event.target.innerText]);
 
-        this.props.onChange({ selectedTags: change });
+        actions.filterChange({ selectedTags: change });
     }
 
     render() {
@@ -26,7 +30,7 @@ export class Tags extends Component {
                 <span>Show tasks with tags</span>
                 <ul className="tags-list"
                     data-name="tags"
-                    onClick={this.handleTagsFilter.bind(this)}>
+                    onClick={(event) => this.handleTagsFilter(event)}>
                     {tagList}
                 </ul>
             </div>
@@ -34,4 +38,16 @@ export class Tags extends Component {
     }
 }
 
-export default Tags;
+const enhance = compose(
+    connect(data => ({
+        selectedTags: data.filters.selectedTags,
+        tags: makeUniqueTagList(data.list)
+    })),
+    lifecycle({
+        componentDidCatch(error) {
+            console.log('Oops, error!', error);
+        }
+    })
+);
+
+export default enhance(TagsList);

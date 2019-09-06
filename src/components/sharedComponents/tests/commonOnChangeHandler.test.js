@@ -2,13 +2,13 @@ import handleChange from '../commonOnChangeHandler';
 
 describe('handleChange', () => {
     it('should call onChange from passed props with proper arguments', () => {
-        const event = {
+        let event = {
             currentTarget: {
                 name: 'fakeName',
                 value: 'fakeValue'
             }
         };
-        const props = {
+        let props = {
             onChange: jest.fn()
         };
 

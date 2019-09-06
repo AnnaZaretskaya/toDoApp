@@ -1,16 +1,15 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-export default class DeleteCompleted extends Component {
+function DeleteCompleted(props) {
+    return (
+        <div className="delete-completed"
+             hidden={(props.number === 0)}>
+            <button onClick={props.onDeleteAllDone}>
+                Delete {props.number} done tasks
+            </button>
 
-    render() {
-        return (
-            <div className="delete-completed"
-                 hidden={(this.props.number === 0)}>
-                <button onClick={this.props.onDeleteAllDone}>
-                    Delete {this.props.number} done tasks
-                </button>
-
-            </div>
-        )
-    }
+        </div>
+    )
 }
+
+export default DeleteCompleted;

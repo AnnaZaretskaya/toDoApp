@@ -1,13 +1,12 @@
 import { store } from "../../storeUtils/store";
-import { ACTION_TYPE } from "../../storeUtils/actionsType";
 
-export const applyFilter = (change) => {
+export const filterChange = (change) => {
     return {
-        type: ACTION_TYPE.FILTER,
+        type: 'FILTER',
         change: change
     }
 };
 
-export const actionsFilters = {
-    applyFilter: change => store.dispatch(applyFilter(change)),
+export const actions = {
+    filterChange: change => store.dispatch(filterChange(change)),
 };

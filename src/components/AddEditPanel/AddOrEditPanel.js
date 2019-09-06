@@ -1,20 +1,15 @@
 import _ from 'underscore';
 import Tags from './components/Tags';
+import { connect } from 'react-redux';
 import Title from './components/Title';
 import React, { Component } from 'react';
 import Priority from './components/Priority';
-import Description from './components/Description';
-import ButtonSection from './components/ButtonSection';
-import initState from '../../storeUtils/initialStoreState';
-import { connect } from 'react-redux';
 import { compose, lifecycle } from "recompose";
-import { actionsEditPanel } from './AddOrEditPanel.actions';
-import { actionsShared } from "../sharedComponents/shared.actions";
+import Description from './components/Description';
+import { actions } from './AddOrEditPanel.actions';
+import ButtonSection from './components/ButtonSection';
+import { initState } from '../../storeUtils/initialStoreState';
 
-// exported for tests only
-export const actions = {...actionsShared, ...actionsEditPanel};
-
-// exported for tests only
 export class AddOrEditPanel extends Component {
 
     isFormValid() {
@@ -25,7 +20,7 @@ export class AddOrEditPanel extends Component {
         event.preventDefault();
 
         if (this.isFormValid()) {
-            let newItem = Object.assign({}, this.props.shownItem, {id: Math.floor(Math.random() * 10000), isDone: false});
+            let newItem = {...this.props.shownItem, ...{id: Math.floor(Math.random() * 10000), isDone: false}};
 
             newItem.tags = newItem.tags
                 .split(',')
@@ -66,7 +61,7 @@ export class AddOrEditPanel extends Component {
     }
 
     render() {
-        let wasChanged = !_.isEqual(this.props.shownItem,this.props.editedItem);
+        let wasChanged = !_.isEqual(this.props.shownItem, this.props.editedItem);
         let isFormValid = this.isFormValid();
         let isCreateMode = !(this.props.shownItem.id);
         let areAllFieldsEmpty = !(this.props.shownItem.title || this.props.shownItem.description || this.props.shownItem.tags);
@@ -96,31 +91,31 @@ export class AddOrEditPanel extends Component {
                         isCreateMode={isCreateMode}
                         wasChanged={wasChanged}
                         areAllFieldsEmpty={areAllFieldsEmpty}
-                        onCreate={this.handleCreateButtonClick.bind(this)}
-                        onReset={this.reset.bind(this)}
-                        onEdit={this.handleEditButtonClick.bind(this)}
-                        onRestore={this.restore.bind(this)}/>
+                        onCreate={(event) => this.handleCreateButtonClick(event)}
+                        onReset={(event) => this.reset(event)}
+                        onEdit={(event) => this.handleEditButtonClick(event)}
+                        onRestore={(event) => this.restore(event)}/>
                 </form>
             </aside>
         );
     }
 }
 
-// exported for tests only
 export function mapStateToProps(data) {
     let editedItem;
 
     if (data.shownItem.id) {
-        editedItem = Object.assign({}, data.list.find((item) => {
+        editedItem = {...data.list.find((item) => {
             return item.id === data.shownItem.id
-        }));
+        })};
+
         editedItem.tags = editedItem.tags.join(', ');
     }
 
     return {
         shownItem: data.shownItem,
         editedItem: editedItem || initState.shownItem
-    }
+    };
 }
 
 const enhance = compose(
